@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { ArrowLeft, ArrowUpRight, ShieldCheck, Box } from "lucide-react";
+import Image from "next/image";
 
 export function generateStaticParams() {
   return products.map((product) => ({
@@ -43,11 +44,13 @@ export default async function ProductDetailPage({
             
             {/* Left: Product Image & Badges */}
             <div className="lg:col-span-5 space-y-6">
-              <div className="aspect-square bg-slate-50 border border-slate-100 rounded-3xl flex items-center justify-center p-12">
-                <div className="text-center text-slate-400">
-                  <Box className="w-24 h-24 mx-auto mb-4 opacity-50" />
-                  <p className="font-medium">Product Packaging Placeholder</p>
-                </div>
+              <div className="aspect-square bg-slate-50 border border-slate-100 rounded-3xl flex items-center justify-center overflow-hidden relative shadow-inner">
+                <Image 
+                  src="/images/packaging_robotics.png" 
+                  alt={product.name}
+                  fill
+                  className="object-cover p-8"
+                />
               </div>
               
               <div className="flex flex-wrap gap-2">

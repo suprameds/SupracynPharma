@@ -12,7 +12,7 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
-import { Menu } from "lucide-react";
+import { Menu, Stethoscope } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
 export function Header() {
@@ -20,9 +20,10 @@ export function Header() {
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container mx-auto flex h-16 items-center justify-between px-4 md:px-8">
         <div className="flex items-center gap-2">
-          {/* Logo Placeholder */}
           <Link href="/" className="flex items-center space-x-2">
-            <div className="h-8 w-8 rounded-sm bg-primary" />
+            <div className="h-10 w-10 rounded-xl bg-primary flex items-center justify-center text-white shadow-sm">
+              <Stethoscope className="h-6 w-6" />
+            </div>
             <span className="font-bold text-xl tracking-tight text-primary">Supracyn Pharma</span>
           </Link>
         </div>

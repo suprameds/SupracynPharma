@@ -2,7 +2,8 @@ import { PageHeader } from "@/components/blocks/page-header";
 import { therapyAreas } from "@/data/therapy-areas";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Pill, Activity, Heart, Thermometer, ShieldCheck, Microscope } from "lucide-react";
+import Image from "next/image";
 
 export const metadata = {
   title: "Therapy Areas | Supracyn Pharma",
@@ -32,8 +33,12 @@ export default function TherapyAreasPage() {
               >
                 
                 <div className="flex-1 space-y-6">
-                  <div className="inline-flex items-center justify-center h-16 w-16 rounded-2xl bg-primary/5 text-primary mb-2">
-                    <span className="text-xl font-bold">Icon</span>
+                  <div className="inline-flex items-center justify-center h-16 w-16 rounded-2xl bg-primary/10 text-primary mb-2 shadow-sm border border-primary/20">
+                    {index === 0 && <Activity className="h-8 w-8" />}
+                    {index === 1 && <Pulse className="h-8 w-8" />}
+                    {index === 2 && <Heart className="h-8 w-8" />}
+                    {index === 3 && <Microscope className="h-8 w-8" />}
+                    {index > 3 && <Pill className="h-8 w-8" />}
                   </div>
                   <h2 className="text-3xl font-bold text-slate-900 tracking-tight">{area.name}</h2>
                   <p className="text-lg text-slate-600 leading-relaxed">
@@ -53,8 +58,13 @@ export default function TherapyAreasPage() {
                 </div>
 
                 <div className="flex-1 w-full relative">
-                  <div className="aspect-[4/3] bg-slate-50 rounded-2xl border border-slate-100 flex items-center justify-center p-8 text-center relative z-10">
-                    <span className="text-slate-400 font-medium">Therapy Context Image Placeholder</span>
+                  <div className="aspect-[4/3] bg-slate-50 rounded-2xl border border-slate-100 flex items-center justify-center overflow-hidden relative z-10 shadow-lg">
+                    <Image 
+                      src="/images/facility_infrastructure.png" 
+                      alt={area.name}
+                      fill
+                      className="object-cover opacity-90 transition-opacity hover:opacity-100 duration-500"
+                    />
                   </div>
                   <div className={`absolute top-4 ${index % 2 === 0 ? '-right-4' : '-left-4'} w-64 h-64 bg-accent/10 rounded-full blur-3xl -z-10`} />
                 </div>

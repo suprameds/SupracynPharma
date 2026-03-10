@@ -2,6 +2,7 @@ import { blogPosts } from "@/data/blog-posts";
 import { notFound } from "next/navigation";
 import { PageHeader } from "@/components/blocks/page-header";
 import { Calendar, User } from "lucide-react";
+import Image from "next/image";
 
 export function generateStaticParams() {
   return blogPosts.map((post) => ({
@@ -44,9 +45,15 @@ export default async function BlogPostPage({
             </div>
           </header>
 
-          <div className="aspect-[21/9] bg-slate-100 rounded-3xl mb-16 flex items-center justify-center text-slate-400 border border-slate-200">
-            <span>Hero Image Placeholder</span>
-          </div>
+          <div className="aspect-[21/9] w-full bg-slate-100 rounded-3xl overflow-hidden mb-12 relative shadow-lg">
+          <Image 
+            src="/images/logistics_distribution.png" 
+            alt={post.title}
+            fill
+            className="object-cover"
+            priority
+          />
+        </div>
 
           <div 
             className="prose prose-slate lg:prose-lg max-w-none prose-headings:font-bold prose-headings:text-slate-900 prose-a:text-primary prose-a:no-underline hover:prose-a:underline"

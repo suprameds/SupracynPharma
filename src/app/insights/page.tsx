@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
 import { Calendar, User } from "lucide-react";
+import Image from "next/image";
 
 export const metadata = {
   title: "Insights & Updates | Supracyn Pharma",
@@ -28,9 +29,12 @@ export default function InsightsPage() {
               <Link key={post.id} href={`/insights/${post.slug}`}>
                 <Card className="h-full hover:shadow-lg transition-shadow duration-300 border-slate-200 overflow-hidden bg-white group cursor-pointer flex flex-col">
                   <div className="aspect-[16/9] bg-slate-100 relative overflow-hidden">
-                    <div className="absolute inset-0 flex items-center justify-center text-slate-400">
-                      <span className="text-xs font-semibold tracking-wider font-mono">IMG_PLACEHOLDER</span>
-                    </div>
+                    <Image 
+                      src="/images/logistics_distribution.png" 
+                      alt={post.title}
+                      fill
+                      className="object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
                     <div className="absolute inset-0 bg-primary/0 group-hover:bg-primary/5 transition-colors duration-300" />
                   </div>
                   <CardHeader className="pb-3 pt-6 flex-grow-0">
