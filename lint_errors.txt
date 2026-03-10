@@ -1,0 +1,39 @@
+﻿
+> supracyn-pharma@0.1.0 lint
+> eslint
+
+
+C:\Projects\SupracynPharma\src\app\about\page.tsx
+  83:13   error  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  83:158  error  `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+
+C:\Projects\SupracynPharma\src\app\buy-suprameds\page.tsx
+  3:10  warning  'CheckCircle2' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Projects\SupracynPharma\src\app\page.tsx
+  13:9  warning  'featuredPosts' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Projects\SupracynPharma\src\app\partnerships\page.tsx
+  10:3  warning  'searchParams' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Projects\SupracynPharma\src\components\blocks\page-header.tsx
+  29:39  warning  'index' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Projects\SupracynPharma\src\components\layout\header.tsx
+  13:16  warning  'X' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Projects\SupracynPharma\src\data\therapy-areas.ts
+  1:10  warning  'Activity' is defined but never used     @typescript-eslint/no-unused-vars
+  1:20  warning  'Brain' is defined but never used        @typescript-eslint/no-unused-vars
+  1:27  warning  'ShieldPlus' is defined but never used   @typescript-eslint/no-unused-vars
+  1:39  warning  'Stethoscope' is defined but never used  @typescript-eslint/no-unused-vars
+  1:52  warning  'Wind' is defined but never used         @typescript-eslint/no-unused-vars
+
+C:\Projects\SupracynPharma\src\data\trust-signals.ts
+  1:10  warning  'Globe' is defined but never used        @typescript-eslint/no-unused-vars
+  1:17  warning  'ShieldCheck' is defined but never used  @typescript-eslint/no-unused-vars
+  1:30  warning  'Factory' is defined but never used      @typescript-eslint/no-unused-vars
+  1:39  warning  'Award' is defined but never used        @typescript-eslint/no-unused-vars
+
+Γ£û 16 problems (2 errors, 14 warnings)
+

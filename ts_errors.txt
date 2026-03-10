@@ -1,0 +1,4 @@
+﻿src/components/layout/header.tsx(41,51): error TS2322: Type '{ children: Element; asChild: true; }' is not assignable to type 'IntrinsicAttributes & NavigationMenuLinkProps'.
+  Property 'asChild' does not exist on type 'IntrinsicAttributes & NavigationMenuLinkProps'.
+src/components/layout/header.tsx(76,27): error TS2322: Type '{ children: Element; asChild: true; }' is not assignable to type 'IntrinsicAttributes & Props<unknown>'.
+  Property 'asChild' does not exist on type 'IntrinsicAttributes & Props<unknown>'.
