@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 
 interface HeroProps {
@@ -67,9 +68,13 @@ export function Hero({
               className="relative hidden lg:block"
             >
               <div className="aspect-[4/3] rounded-2xl bg-slate-100 border overflow-hidden relative shadow-xl">
-                <div className="absolute inset-0 bg-gradient-to-tr from-slate-200 to-slate-50 flex items-center justify-center">
-                  <span className="text-slate-400 font-medium">Corporate Facility / Hero Image Placeholder</span>
-                </div>
+                <Image 
+                  src="/images/hero_corporate.png" 
+                  alt="Supracyn Corporate Facility" 
+                  fill 
+                  className="object-cover"
+                  priority
+                />
               </div>
               
               {/* Optional decor element */}

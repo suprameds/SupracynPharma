@@ -6,6 +6,7 @@ import { therapyAreas } from "@/data/therapy-areas";
 import { blogPosts } from "@/data/blog-posts";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
 
 export default function Home() {
@@ -51,8 +52,8 @@ export default function Home() {
             </div>
             
             <div className="relative">
-              <div className="aspect-square md:aspect-[4/3] bg-slate-100 rounded-2xl border flex items-center justify-center p-8 text-center relative z-10">
-                <span className="text-slate-400 font-medium">Corporate Video / Infrastructure Image Placeholder</span>
+              <div className="aspect-square md:aspect-[4/3] bg-slate-100 rounded-2xl border flex items-center justify-center p-8 text-center relative z-10 overflow-hidden shadow-lg">
+                <Image src="/images/hero_corporate.png" alt="Supracyn Headquarters" fill className="object-cover" />
               </div>
               <div className="absolute top-8 -right-8 w-64 h-64 bg-accent/10 rounded-full blur-3xl -z-10" />
               <div className="absolute -bottom-8 -left-8 w-64 h-64 bg-primary/5 rounded-full blur-3xl -z-10" />
@@ -160,19 +161,19 @@ export default function Home() {
 
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-4">
-                <div className="bg-slate-800/50 aspect-square rounded-2xl border border-slate-700/50 flex items-center justify-center p-6 text-center backdrop-blur-sm">
-                  <span className="text-slate-400 text-sm">Facility Image 1</span>
+                <div className="bg-slate-800/50 aspect-square rounded-2xl border border-slate-700/50 flex items-center justify-center p-6 text-center backdrop-blur-sm relative overflow-hidden">
+                  <Image src="/images/facility_infrastructure.png" alt="Manufacturing Facility" fill className="object-cover opacity-80 hover:opacity-100 transition-opacity duration-300" />
                 </div>
-                <div className="bg-slate-800/50 aspect-[4/5] rounded-2xl border border-slate-700/50 flex items-center justify-center p-6 text-center backdrop-blur-sm">
-                  <span className="text-slate-400 text-sm">Packaging Image</span>
+                <div className="bg-slate-800/50 aspect-[4/5] rounded-2xl border border-slate-700/50 flex items-center justify-center p-6 text-center backdrop-blur-sm relative overflow-hidden">
+                  <Image src="/images/packaging_robotics.png" alt="Automated Packaging" fill className="object-cover opacity-80 hover:opacity-100 transition-opacity duration-300" />
                 </div>
               </div>
               <div className="space-y-4 pt-8">
-                <div className="bg-slate-800/50 aspect-[4/5] rounded-2xl border border-slate-700/50 flex items-center justify-center p-6 text-center backdrop-blur-sm">
-                  <span className="text-slate-400 text-sm">Laboratory Image</span>
+                <div className="bg-slate-800/50 aspect-[4/5] rounded-2xl border border-slate-700/50 flex items-center justify-center p-6 text-center backdrop-blur-sm relative overflow-hidden">
+                  <Image src="/images/laboratory_qc.png" alt="Quality Control Lab" fill className="object-cover opacity-80 hover:opacity-100 transition-opacity duration-300" />
                 </div>
-                <div className="bg-slate-800/50 aspect-square rounded-2xl border border-slate-700/50 flex items-center justify-center p-6 text-center backdrop-blur-sm">
-                  <span className="text-slate-400 text-sm">Logistics Image</span>
+                <div className="bg-slate-800/50 aspect-square rounded-2xl border border-slate-700/50 flex items-center justify-center p-6 text-center backdrop-blur-sm relative overflow-hidden">
+                  <Image src="/images/logistics_distribution.png" alt="Logistics and Distribution" fill className="object-cover opacity-80 hover:opacity-100 transition-opacity duration-300" />
                 </div>
               </div>
             </div>

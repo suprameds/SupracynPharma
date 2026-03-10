@@ -1,5 +1,7 @@
 import { PageHeader } from "@/components/blocks/page-header";
 import { TrustSignalsStrip } from "@/components/blocks/trust-signals";
+import Image from "next/image";
+import { Award } from "lucide-react";
 
 export const metadata = {
   title: "Quality & Compliance | Supracyn Pharma",
@@ -60,13 +62,19 @@ export default function QualityPage() {
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div className="aspect-square bg-white rounded-xl shadow-sm border border-slate-100 flex items-center justify-center p-4">
-                  <span className="text-slate-400 font-medium text-sm text-center">Certificate Placeholder</span>
+                  <div className="text-center flex flex-col items-center">
+                    <Award className="h-8 w-8 text-primary/60 mb-2" />
+                    <span className="text-slate-400 font-medium text-xs">WHO-GMP</span>
+                  </div>
                 </div>
                 <div className="aspect-square bg-white rounded-xl shadow-sm border border-slate-100 flex items-center justify-center p-4">
-                  <span className="text-slate-400 font-medium text-sm text-center">Certificate Placeholder</span>
+                  <div className="text-center flex flex-col items-center">
+                    <Award className="h-8 w-8 text-primary/60 mb-2" />
+                    <span className="text-slate-400 font-medium text-xs">ISO 9001</span>
+                  </div>
                 </div>
-                <div className="col-span-2 aspect-[3/1] bg-white rounded-xl shadow-sm border border-slate-100 flex items-center justify-center p-4">
-                  <span className="text-slate-400 font-medium text-sm text-center">Laboratory Image Placeholder</span>
+                <div className="col-span-2 aspect-[3/1] bg-white rounded-xl shadow-sm border border-slate-100 flex items-center justify-center p-4 relative overflow-hidden">
+                  <Image src="/images/laboratory_qc.png" alt="Quality Control Laboratory" fill className="object-cover" />
                 </div>
               </div>
             </div>

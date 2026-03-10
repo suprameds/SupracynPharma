@@ -1,5 +1,6 @@
 import { PageHeader } from "@/components/blocks/page-header";
 import { TrustSignalsStrip } from "@/components/blocks/trust-signals";
+import { User } from "lucide-react";
 
 export const metadata = {
   title: "About Us | Supracyn Pharma",
@@ -77,7 +78,7 @@ export default function AboutPage() {
       <section className="py-20 bg-slate-50 border-y border-slate-200">
         <div className="container mx-auto px-4 md:px-8 max-w-4xl text-center">
           <div className="w-24 h-24 bg-slate-200 rounded-full mx-auto mb-6 flex items-center justify-center overflow-hidden">
-            <span className="text-sm text-slate-400">Photo</span>
+            <User className="h-10 w-10 text-slate-400" />
           </div>
           <blockquote className="text-2xl md:text-3xl font-medium text-slate-800 leading-relaxed mb-8">
             &quot;Our commitment to quality is not just a regulatory requirement; it is a moral obligation to the patients who rely on our formulations every day.&quot;
