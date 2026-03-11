@@ -1,6 +1,7 @@
 export type NavItem = {
   label: string;
   href: string;
+  description?: string;
   children?: NavItem[];
 };
 
@@ -11,18 +12,18 @@ export const mainNavigation: NavItem[] = [
     label: "Portfolio",
     href: "/products",
     children: [
-      { label: "All Products", href: "/products" },
-      { label: "Therapy Areas", href: "/therapy-areas" },
-      { label: "Quality & Compliance", href: "/quality" },
+      { label: "All Products", href: "/products", description: "Browse our full catalogue of 500+ approved formulations" },
+      { label: "Therapy Areas", href: "/therapy-areas", description: "Cardiology, neurology, respiratory, and more" },
+      { label: "Quality & Compliance", href: "/quality", description: "WHO-GMP standards, certifications, and QA processes" },
     ],
   },
   {
     label: "Infrastructure",
     href: "/infrastructure",
     children: [
-      { label: "Manufacturing", href: "/infrastructure#manufacturing" },
-      { label: "R&D", href: "/infrastructure#research" },
-    ]
+      { label: "Manufacturing", href: "/infrastructure", description: "Solid and liquid dosage lines with 1B+ tablet capacity" },
+      { label: "R&D & Innovation", href: "/infrastructure", description: "Dedicated labs for formulation and stability studies" },
+    ],
   },
   { label: "Partnerships", href: "/partnerships" },
   { label: "Insights", href: "/insights" },

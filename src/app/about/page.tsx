@@ -74,7 +74,7 @@ export default function AboutPage() {
       </section>
 
       {/* Leadership */}
-      <section className="py-20 bg-slate-50 border-y border-slate-200">
+      <section id="leadership" className="py-20 bg-slate-50 border-y border-slate-200">
         <div className="container mx-auto px-4 md:px-8 max-w-4xl">
           <h2 className="text-3xl font-bold text-slate-900 text-center mb-12">Leadership</h2>
 

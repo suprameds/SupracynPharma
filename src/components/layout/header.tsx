@@ -38,14 +38,22 @@ export function Header() {
                     <>
                       <NavigationMenuTrigger className="bg-transparent">{item.label}</NavigationMenuTrigger>
                       <NavigationMenuContent>
-                        <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
+                        <ul className="grid w-[420px] gap-1.5 p-3 md:grid-cols-1 lg:w-[480px]">
                           {item.children.map((child) => (
                             <li key={child.label}>
-                              <NavigationMenuLink 
+                              <NavigationMenuLink
                                 render={<Link href={child.href} />}
-                                className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                                className="group flex select-none gap-3 rounded-xl p-3 leading-none no-underline outline-none transition-colors hover:bg-primary/5 focus:bg-primary/5"
                               >
-                                <div className="text-sm font-medium leading-none">{child.label}</div>
+                                <div className="h-8 w-8 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0 mt-0.5 group-hover:bg-primary group-hover:text-white transition-colors">
+                                  <div className="h-1.5 w-1.5 rounded-full bg-primary group-hover:bg-white" />
+                                </div>
+                                <div>
+                                  <div className="text-sm font-semibold text-slate-900 leading-none mb-1">{child.label}</div>
+                                  {child.description && (
+                                    <p className="text-xs text-slate-500 leading-relaxed line-clamp-1">{child.description}</p>
+                                  )}
+                                </div>
                               </NavigationMenuLink>
                             </li>
                           ))}
