@@ -1,3 +1,6 @@
+/* eslint-disable react/no-unknown-property */
+"use client";
+import { useMemo, useState } from "react";
 import { PageHeader } from "@/components/blocks/page-header";
 import { blogPosts } from "@/data/blog-posts";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
@@ -12,6 +15,19 @@ export const metadata = {
 };
 
 export default function InsightsPage() {
+  const categories = useMemo(
+    () => ["All", ...Array.from(new Set(blogPosts.map((p) => p.category)))],
+    []
+  );
+  const [selectedCategory, setSelectedCategory] = useState<string>("All");
+  const filteredPosts = useMemo(
+    () =>
+      selectedCategory === "All"
+        ? blogPosts
+        : blogPosts.filter((p) => p.category === selectedCategory),
+    [selectedCategory]
+  );
+
   return (
     <div className="flex flex-col min-h-screen bg-slate-50">
       <PageHeader 
@@ -24,8 +40,29 @@ export default function InsightsPage() {
 
       <section className="py-20">
         <div className="container mx-auto px-4 md:px-8 max-w-6xl">
+          {/* Category filter pills */}
+          <div className="mb-8 flex flex-wrap gap-2">
+            {categories.map((cat) => {
+              const active = selectedCategory === cat;
+              return (
+                <button
+                  key={cat}
+                  onClick={() => setSelectedCategory(cat)}
+                  className={`px-3 py-1.5 rounded-full text-sm transition-colors ${
+                    active
+                      ? "bg-primary text-white"
+                      : "bg-white border border-slate-200 text-slate-600 hover:border-primary/30"
+                  }`}
+                  aria-pressed={active}
+                >
+                  {cat}
+                </button>
+              );
+            })}
+          </div>
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {blogPosts.map((post) => (
+            {filteredPosts.map((post) => (
               <Link key={post.id} href={`/insights/${post.slug}`}>
                 <Card className="h-full hover:shadow-lg transition-shadow duration-300 border-slate-200 overflow-hidden bg-white group cursor-pointer flex flex-col">
                   <div className="aspect-[16/9] bg-slate-100 relative overflow-hidden">

@@ -1,9 +1,17 @@
 import { PageHeader } from "@/components/blocks/page-header";
 import { InquiryForm } from "@/components/blocks/inquiry-form";
+import type { Metadata } from "next";
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "Business Partnerships | Supracyn Pharma",
-  description: "Partner with Supracyn Pharma for distribution, third-party manufacturing, and institutional supply of high-quality pharmaceuticals.",
+  description:
+    "Partner with Supracyn Pharma for distribution, third-party manufacturing, and institutional supply of high-quality pharmaceuticals.",
+  openGraph: {
+    title: "Business Partnerships | Supracyn Pharma",
+    description:
+      "Partner with Supracyn Pharma for distribution, third-party manufacturing, and institutional supply of high-quality pharmaceuticals.",
+    url: "https://supracynpharma.com/partnerships",
+  },
 };
 
 export default function PartnershipsPage() {
@@ -39,6 +47,28 @@ export default function PartnershipsPage() {
                 </div>
               </div>
               
+              <div>
+                <h2 className="text-2xl font-bold text-slate-900 mb-6">How It Works</h2>
+                <ol className="space-y-6">
+                  {[
+                    { step: "01", title: "Submit Inquiry", desc: "Fill out the partnership form with your requirements. We respond within 24 hours." },
+                    { step: "02", title: "Discovery Call", desc: "Our business development team schedules a call to understand your exact needs." },
+                    { step: "03", title: "Proposal & NDA", desc: "We send a tailored commercial proposal. All discussions are protected under NDA." },
+                    { step: "04", title: "Begin Partnership", desc: "Sign the agreement, finalize product specs, and begin production or distribution." },
+                  ].map((item) => (
+                    <li key={item.step} className="flex gap-4">
+                      <div className="flex-shrink-0 w-10 h-10 rounded-full bg-primary/10 text-primary font-bold text-sm flex items-center justify-center border border-primary/20">
+                        {item.step}
+                      </div>
+                      <div>
+                        <h3 className="font-bold text-slate-900 mb-1">{item.title}</h3>
+                        <p className="text-sm text-slate-600 leading-relaxed">{item.desc}</p>
+                      </div>
+                    </li>
+                  ))}
+                </ol>
+              </div>
+
               <div className="bg-primary text-white p-8 rounded-3xl relative overflow-hidden">
                 <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-bl-full" />
                 <h3 className="text-xl font-bold mb-4 relative z-10">Have a custom requirement?</h3>

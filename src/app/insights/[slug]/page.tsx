@@ -1,8 +1,44 @@
 import { blogPosts } from "@/data/blog-posts";
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { PageHeader } from "@/components/blocks/page-header";
+import Link from "next/link";
 import { Calendar, User } from "lucide-react";
 import Image from "next/image";
+
+export function generateMetadata({
+  params,
+}: {
+  params: { slug: string };
+}): Metadata {
+  const post = blogPosts.find((p) => p.slug === params.slug);
+  const title = post?.title
+    ? `${post.title} | Supracyn Pharma`
+    : "Insights | Supracyn Pharma";
+  const baseDescription =
+    post?.excerpt ??
+    "Explore expert pharmaceutical insights, manufacturing practices, and compliance perspectives from Supracyn Pharma.";
+  const description =
+    baseDescription.length > 160
+      ? `${baseDescription.slice(0, 157)}...`
+      : baseDescription;
+
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      type: "article",
+      publishedTime: post?.date,
+      images: post?.imageUrl ? [{ url: post.imageUrl }] : undefined,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+    },
+  };
+}
 
 export function generateStaticParams() {
   return blogPosts.map((post) => ({
@@ -23,13 +59,33 @@ export default async function BlogPostPage({
 
   return (
     <div className="flex flex-col min-h-screen bg-white">
-      <PageHeader 
-        title={post.category} 
-        breadcrumbs={[
-          { label: "Insights", href: "/insights" },
-          { label: "Article" }
-        ]}
-      />
+      {/* Top bar - breadcrumb only, no h1 */}
+      <div className="bg-white border-b border-slate-200">
+        <div className="container mx-auto px-4 md:px-8 py-6">
+          <nav aria-label="Breadcrumb" className="text-sm text-slate-500">
+            <ol className="flex items-center gap-2">
+              <li>
+                <Link href="/" className="hover:text-primary transition-colors">
+                  Home
+                </Link>
+              </li>
+              <li className="text-slate-300">/</li>
+              <li>
+                <Link
+                  href="/insights"
+                  className="hover:text-primary transition-colors"
+                >
+                  Insights
+                </Link>
+              </li>
+              <li className="text-slate-300">/</li>
+              <li className="text-slate-800 font-medium" aria-current="page">
+                {post.category}
+              </li>
+            </ol>
+          </nav>
+        </div>
+      </div>
 
       <article className="py-16 md:py-24">
         <div className="container mx-auto px-4 md:px-8 max-w-4xl">
@@ -67,7 +123,56 @@ export default async function BlogPostPage({
               </p>
             </div>
           </div>
-          
+
+          {/* More from Insights */}
+          <div className="mt-16 pt-8 border-t border-slate-100">
+            <div className="flex items-center justify-between mb-6">
+              <h3 className="text-xl font-bold text-slate-900">More from Insights</h3>
+              <Link
+                href="/insights"
+                className="text-sm font-semibold text-primary hover:underline"
+              >
+                View all →
+              </Link>
+            </div>
+            <div className="flex flex-col sm:flex-row gap-6">
+              {blogPosts
+                .filter((p) => p.slug !== post.slug)
+                .slice(0, 2)
+                .map((p) => (
+                  <Link
+                    key={p.id}
+                    href={`/insights/${p.slug}`}
+                    className="group flex items-start gap-4 p-4 rounded-xl border border-slate-200 bg-white hover:shadow-md transition-shadow w-full"
+                  >
+                    <div className="relative w-24 h-24 flex-shrink-0 overflow-hidden rounded-lg bg-slate-100">
+                      <Image
+                        src={p.imageUrl}
+                        alt={p.title}
+                        fill
+                        className="object-cover group-hover:scale-105 transition-transform duration-300"
+                      />
+                    </div>
+                    <div className="min-w-0">
+                      <h4 className="text-base font-semibold text-slate-900 group-hover:text-primary transition-colors truncate">
+                        {p.title}
+                      </h4>
+                      <p className="text-sm text-slate-600 line-clamp-2 mt-1">
+                        {p.excerpt}
+                      </p>
+                      <p className="text-xs text-slate-400 mt-2">
+                        {new Date(p.date).toLocaleDateString("en-US", {
+                          month: "short",
+                          day: "numeric",
+                          year: "numeric",
+                        })}
+                      </p>
+                    </div>
+                  </Link>
+                ))}
+            </div>
+          </div>
+ 
         </div>
       </article>
     </div>

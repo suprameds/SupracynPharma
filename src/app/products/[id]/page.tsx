@@ -1,11 +1,41 @@
 import { products } from "@/data/products";
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { PageHeader } from "@/components/blocks/page-header";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { ProductCard } from "@/components/blocks/product-card";
 import Link from "next/link";
 import { ArrowLeft, ArrowUpRight, ShieldCheck } from "lucide-react";
 import Image from "next/image";
+
+export function generateMetadata({
+  params,
+}: {
+  params: { id: string };
+}): Metadata {
+  const product = products.find((p) => p.id === params.id);
+  const title = product?.name
+    ? `${product.name} | Supracyn Pharma`
+    : "Product | Supracyn Pharma";
+  const fallbackDescription =
+    "Explore product details and key highlights from Supracyn Pharma.";
+  const baseDescription = product?.summary ?? fallbackDescription;
+  const description =
+    baseDescription.length > 160
+      ? `${baseDescription.slice(0, 157)}...`
+      : baseDescription;
+
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      images: product?.imageUrl ? [{ url: product.imageUrl }] : undefined,
+    },
+  };
+}
 
 export function generateStaticParams() {
   return products.map((product) => ({
@@ -23,6 +53,12 @@ export default async function ProductDetailPage({
   if (!product) {
     notFound();
   }
+
+  const related = products
+    .filter(
+      (p) => p.therapyAreaId === product.therapyAreaId && p.id !== product.id
+    )
+    .slice(0, 3);
 
   const breadcrumbs = [
     { label: "Products", href: "/products" },
@@ -56,7 +92,7 @@ export default async function ProductDetailPage({
               
               <div className="flex flex-wrap gap-2">
                 <Badge variant="secondary" className="px-3 py-1 text-sm bg-slate-100 text-slate-800 uppercase tracking-wider font-semibold">
-                  {product.therapyAreaId.replace("-", " ")}
+                  {product.therapyAreaId.replace(/-/g, " ")}
                 </Badge>
                 <Badge variant="outline" className="px-3 py-1 text-sm text-primary border-primary/20">
                   {product.dosageForm}
@@ -90,7 +126,7 @@ export default async function ProductDetailPage({
                 </div>
                 <div>
                   <h3 className="text-sm font-semibold text-slate-400 mb-1">Therapy Area</h3>
-                  <p className="text-lg font-medium text-slate-900 capitalize">{product.therapyAreaId.replace("-", " ")}</p>
+                  <p className="text-lg font-medium text-slate-900 capitalize">{product.therapyAreaId.replace(/-/g, " ")}</p>
                 </div>
               </div>
 
@@ -156,6 +192,22 @@ export default async function ProductDetailPage({
           </Link>
         </div>
       </div>
+
+      {related.length > 0 && (
+        <section className="py-16 bg-white border-t border-slate-100">
+          <div className="container mx-auto px-4 md:px-8 max-w-6xl">
+            <div className="flex items-center justify-between mb-8">
+              <h2 className="text-2xl font-bold text-slate-900">More in {product.therapyAreaId.replace(/-/g, " ").replace(/\b\w/g, c => c.toUpperCase())}</h2>
+              <Link href={`/products?therapy=${product.therapyAreaId}`} className="text-sm font-semibold text-primary hover:text-primary/80 transition-colors flex items-center gap-1">
+                View All <ArrowUpRight className="h-4 w-4" />
+              </Link>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {related.map((p) => <ProductCard key={p.id} product={p} />)}
+            </div>
+          </div>
+        </section>
+      )}
     </div>
   );
 }

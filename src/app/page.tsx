@@ -42,6 +42,32 @@ export default function Home() {
       {/* 2. Trust Signals */}
       <TrustSignalsStrip />
 
+      {/* Trusted Globally strip */}
+      <section className="py-10 bg-white border-b border-slate-100">
+        <div className="container mx-auto px-4 md:px-8">
+          <p className="text-center text-xs font-bold uppercase tracking-widest text-slate-400 mb-8">
+            Trusted Across Markets
+          </p>
+          <div className="flex flex-wrap justify-center items-center gap-x-10 gap-y-4">
+            {[
+              { flag: "🇮🇳", country: "India" },
+              { flag: "🇦🇪", country: "UAE" },
+              { flag: "🇰🇪", country: "Kenya" },
+              { flag: "🇳🇬", country: "Nigeria" },
+              { flag: "🇵🇭", country: "Philippines" },
+              { flag: "🇧🇩", country: "Bangladesh" },
+              { flag: "🇹🇿", country: "Tanzania" },
+              { flag: "🇮🇶", country: "Iraq" },
+            ].map(({ flag, country }) => (
+              <div key={country} className="flex items-center gap-2 text-slate-500 font-medium text-sm">
+                <span className="text-xl" aria-hidden="true">{flag}</span>
+                {country}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* 3. About Supracyn Preview */}
       <section className="py-20 md:py-28 bg-white">
         <div className="container mx-auto px-4 md:px-8">
@@ -72,7 +98,7 @@ export default function Home() {
             
             <div className="relative">
               <div className="aspect-square md:aspect-[4/3] bg-slate-100 rounded-2xl border flex items-center justify-center p-8 text-center relative z-10 overflow-hidden shadow-lg">
-                <Image src="/images/hero_corporate.png" alt="Supracyn Headquarters" fill className="object-cover" />
+                <Image src="/images/facility_infrastructure.png" alt="Supracyn Headquarters" fill className="object-cover" />
               </div>
               <div className="absolute top-8 -right-8 w-64 h-64 bg-accent/10 rounded-full blur-3xl -z-10" />
               <div className="absolute -bottom-8 -left-8 w-64 h-64 bg-primary/5 rounded-full blur-3xl -z-10" />

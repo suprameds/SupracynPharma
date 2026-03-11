@@ -1,9 +1,17 @@
 import { PageHeader } from "@/components/blocks/page-header";
 import { TrustSignalsStrip } from "@/components/blocks/trust-signals";
+import type { Metadata } from "next";
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "About Us | Supracyn Pharma",
-  description: "Learn about Supracyn Pharma's mission, vision, and our commitment to manufacturing excellence in the healthcare industry.",
+  description:
+    "Learn about Supracyn Pharma's mission, vision, and our commitment to manufacturing excellence in the healthcare industry.",
+  openGraph: {
+    title: "About Us | Supracyn Pharma",
+    description:
+      "Learn about Supracyn Pharma's mission, vision, and our commitment to manufacturing excellence in the healthcare industry.",
+    url: "https://supracynpharma.com/about",
+  },
 };
 
 export default function AboutPage() {
@@ -73,6 +81,37 @@ export default function AboutPage() {
         </div>
       </section>
 
+      <section className="py-16 md:py-20 bg-white border-b border-slate-100">
+        <div className="container mx-auto px-4 md:px-8 max-w-4xl">
+          <h2 className="text-3xl font-bold text-slate-900 text-center mb-14">Our Journey</h2>
+          <div className="relative">
+            {/* Vertical line */}
+            <div className="absolute left-6 top-0 bottom-0 w-px bg-slate-200 md:left-1/2" aria-hidden="true" />
+            <ol className="space-y-10">
+              {[
+                { year: "2001", title: "Foundation", desc: "Supracyn Pharma was established in New Delhi with a mission to manufacture affordable, high-quality generics for domestic healthcare." },
+                { year: "2006", title: "WHO-GMP Certification", desc: "Achieved WHO-GMP certification, marking our entry into the global pharmaceutical export market." },
+                { year: "2011", title: "International Expansion", desc: "Commenced exports to African and Middle Eastern markets, reaching 10+ countries." },
+                { year: "2016", title: "Infrastructure Scale-up", desc: "Expanded manufacturing capacity to over 1 billion tablets per annum with a new automated production line." },
+                { year: "2021", title: "R&D Investment", desc: "Launched dedicated R&D centre for novel formulation development and stability studies." },
+                { year: "2024", title: "25+ Countries", desc: "Now exporting to over 25 countries with 500+ approved formulations across 6 therapy areas." },
+              ].map((item, i) => (
+                <li key={item.year} className={`relative flex gap-8 ${i % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"} md:w-1/2 ${i % 2 === 0 ? "md:ml-0 md:pr-12" : "md:ml-auto md:pl-12"}`}>
+                  <div className="flex-shrink-0 w-12 h-12 rounded-full bg-primary text-white font-bold text-xs flex items-center justify-center shadow-md z-10">
+                    {item.year.slice(2)}
+                  </div>
+                  <div className="bg-white border border-slate-100 rounded-2xl p-5 shadow-sm flex-1">
+                    <div className="text-xs font-bold text-primary uppercase tracking-wider mb-1">{item.year}</div>
+                    <h3 className="text-base font-bold text-slate-900 mb-2">{item.title}</h3>
+                    <p className="text-sm text-slate-600 leading-relaxed">{item.desc}</p>
+                  </div>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </div>
+      </section>
+
       {/* Leadership */}
       <section id="leadership" className="py-20 bg-slate-50 border-y border-slate-200">
         <div className="container mx-auto px-4 md:px-8 max-w-4xl">
@@ -80,11 +119,11 @@ export default function AboutPage() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
             {[
-              { name: "Managing Director", title: "Managing Director", initials: "MD" },
-              { name: "Chief Operating Officer", title: "Chief Operating Officer", initials: "CO" },
-              { name: "Head of Quality Assurance", title: "Head of Quality Assurance", initials: "QA" },
+              { role: "Managing Director", initials: "MD", bio: "Leading Supracyn Pharma's strategic vision and global expansion since founding." },
+              { role: "Chief Operating Officer", initials: "CO", bio: "Overseeing manufacturing excellence, supply chain, and operational efficiency." },
+              { role: "Head of Quality Assurance", initials: "QA", bio: "Ensuring WHO-GMP compliance and zero-compromise quality across all product lines." },
             ].map((person) => (
-              <div key={person.title} className="bg-white rounded-2xl border border-slate-100 p-6 text-center shadow-sm">
+              <div key={person.role} className="bg-white rounded-2xl border border-slate-100 p-6 text-center shadow-sm">
                 {/* Replace the initials div with a real <Image> once photos are available */}
                 <div
                   className="w-20 h-20 rounded-full bg-primary/10 text-primary font-bold text-xl flex items-center justify-center mx-auto mb-4"
@@ -92,8 +131,8 @@ export default function AboutPage() {
                 >
                   {person.initials}
                 </div>
-                <div className="text-base font-bold text-slate-900">{person.name}</div>
-                <div className="text-sm text-slate-500 mt-1">{person.title}, Supracyn Pharma</div>
+                <div className="text-base font-bold text-slate-900">{person.role}</div>
+                <div className="text-sm text-slate-500 mt-1">{person.bio}</div>
               </div>
             ))}
           </div>

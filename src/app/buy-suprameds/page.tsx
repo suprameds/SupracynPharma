@@ -71,14 +71,14 @@ export default function BuySupramedsPage() {
                 </div>
                 <h3 className="text-3xl font-bold mb-4">Ready to Order?</h3>
                 <p className="text-slate-300 mb-10 text-lg leading-relaxed max-w-xs mx-auto">
-                  You are now leaving the corporate portal and entering our verified online pharmacy.
+                  Suprameds.in is our dedicated consumer platform for safe, convenient online ordering of Supracyn products.
                 </p>
                 <a href="https://suprameds.in" target="_blank" rel="noopener noreferrer" className="block w-full">
                   <Button size="lg" className="w-full h-14 text-lg bg-white text-slate-900 hover:bg-slate-100 border-none transition-all hover:scale-105">
                     Continue to Suprameds.in
                   </Button>
                 </a>
-                <p className="text-xs text-slate-500 mt-6 mt-6">Secure window. SSL Encrypted Connection.</p>
+                <p className="text-xs text-slate-500 mt-6 mt-6">Secure checkout. All orders shipped directly from our certified facilities.</p>
               </div>
             </div>
 

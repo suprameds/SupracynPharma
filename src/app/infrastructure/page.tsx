@@ -3,10 +3,18 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import Image from "next/image";
 import { Factory, Truck, Microscope, ShieldCheck } from "lucide-react";
+import type { Metadata } from "next";
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "Manufacturing & Infrastructure | Supracyn Pharma",
-  description: "Explore Supracyn Pharma's robust manufacturing capabilities, state-of-the-art facilities, and supply chain excellence.",
+  description:
+    "Explore Supracyn Pharma's robust manufacturing capabilities, state-of-the-art facilities, and supply chain excellence.",
+  openGraph: {
+    title: "Manufacturing & Infrastructure | Supracyn Pharma",
+    description:
+      "Explore Supracyn Pharma's robust manufacturing capabilities, state-of-the-art facilities, and supply chain excellence.",
+    url: "https://supracynpharma.com/infrastructure",
+  },
 };
 
 export default function InfrastructurePage() {
@@ -20,7 +28,7 @@ export default function InfrastructurePage() {
         ]}
       />
 
-      <section className="py-20 md:py-24 bg-white">
+      <section id="manufacturing" className="py-20 md:py-24 bg-white">
         <div className="container mx-auto px-4 md:px-8 max-w-6xl">
           
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center mb-24">
@@ -71,7 +79,8 @@ export default function InfrastructurePage() {
             </div>
           </div>
 
-          {/* Capabilities Grid */}
+          {/* Capabilities Grid — also serves as the R&D anchor for nav links */}
+          <div id="research" className="scroll-mt-20">
           <h3 className="text-2xl font-bold text-center text-slate-900 mb-12">Our Core Capabilities</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
@@ -92,6 +101,7 @@ export default function InfrastructurePage() {
               );
             })}
           </div>
+          </div>{/* end #research */}
 
         </div>
       </section>

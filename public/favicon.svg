@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none">
+  <rect width="32" height="32" rx="8" fill="oklch(0.35 0.12 255)"/>
+  <!-- Stethoscope simplified mark -->
+  <circle cx="16" cy="11" r="4" stroke="white" stroke-width="2" fill="none"/>
+  <path d="M12 11 Q8 11 8 17 Q8 23 14 23" stroke="white" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <circle cx="16" cy="23" r="2.5" stroke="white" stroke-width="2" fill="none"/>
+  <line x1="14" y1="23" x2="18" y2="23" stroke="white" stroke-width="2"/>
+</svg>

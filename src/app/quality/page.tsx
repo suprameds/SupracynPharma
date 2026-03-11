@@ -2,10 +2,18 @@ import { PageHeader } from "@/components/blocks/page-header";
 import { TrustSignalsStrip } from "@/components/blocks/trust-signals";
 import Image from "next/image";
 import { Award } from "lucide-react";
+import type { Metadata } from "next";
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "Quality & Compliance | Supracyn Pharma",
-  description: "Supracyn Pharma's unwavering commitment to quality assurance, regulatory compliance, and WHO-GMP manufacturing standards.",
+  description:
+    "Supracyn Pharma's unwavering commitment to quality assurance, regulatory compliance, and WHO-GMP manufacturing standards.",
+  openGraph: {
+    title: "Quality & Compliance | Supracyn Pharma",
+    description:
+      "Supracyn Pharma's unwavering commitment to quality assurance, regulatory compliance, and WHO-GMP manufacturing standards.",
+    url: "https://supracynpharma.com/quality",
+  },
 };
 
 export default function QualityPage() {

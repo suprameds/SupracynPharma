@@ -50,7 +50,10 @@ export const metadata: Metadata = {
     images: ["/images/hero_corporate.png"],
   },
   icons: {
-    icon: "/favicon.ico",
+    icon: [
+      { url: "/favicon.svg", type: "image/svg+xml" },
+    ],
+    apple: "/favicon.svg",
   },
   robots: {
     index: true,
