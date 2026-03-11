@@ -99,13 +99,25 @@ export default function ContactPage() {
         </div>
       </section>
 
-      {/* Map Placeholder */}
-      <section className="h-96 bg-slate-200 relative">
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="text-slate-500 flex flex-col items-center">
-            <MapPin className="h-12 w-12 mb-4 opacity-50" />
-            <span className="font-bold tracking-widest uppercase text-sm">Interactive Map Placeholder</span>
-          </div>
+      {/* Location map — OpenStreetMap embed, no API key required */}
+      <section className="relative border-t border-slate-200" aria-label="Office location map">
+        <iframe
+          title="Supracyn Pharma office location"
+          src="https://www.openstreetmap.org/export/embed.html?bbox=77.1025%2C28.5272%2C77.1625%2C28.5872&layer=mapnik&marker=28.5572%2C77.1325"
+          className="w-full h-80 md:h-96"
+          loading="lazy"
+          referrerPolicy="no-referrer"
+        />
+        <div className="absolute bottom-4 right-4">
+          <a
+            href="https://www.openstreetmap.org/?mlat=28.5572&mlon=77.1325#map=14/28.5572/77.1325"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 bg-white border border-slate-200 shadow-sm text-xs font-medium text-slate-700 hover:text-primary px-3 py-1.5 rounded-full transition-colors"
+          >
+            <MapPin className="h-3.5 w-3.5" aria-hidden="true" />
+            View larger map
+          </a>
         </div>
       </section>
 

@@ -1,6 +1,7 @@
 import { PageHeader } from "@/components/blocks/page-header";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import Image from "next/image";
 import { Factory, Truck, Microscope, ShieldCheck } from "lucide-react";
 
 export const metadata = {
@@ -41,15 +42,30 @@ export default function InfrastructurePage() {
             </div>
             
             <div className="grid grid-cols-2 gap-4">
-              <div className="bg-slate-100 aspect-[4/5] rounded-2xl flex items-center justify-center p-6 border text-center">
-                <span className="text-slate-400 font-medium text-sm">Solid Dosage Line Image</span>
+              <div className="bg-slate-100 aspect-[4/5] rounded-2xl overflow-hidden border relative shadow-md">
+                <Image
+                  src="/images/infrastructure/solid-dosage.png"
+                  alt="Solid dosage tablet compression line"
+                  fill
+                  className="object-cover"
+                />
               </div>
               <div className="space-y-4 pt-12">
-                <div className="bg-slate-100 aspect-square rounded-2xl flex items-center justify-center p-6 border text-center">
-                  <span className="text-slate-400 font-medium text-sm">Liquid Line Image</span>
+                <div className="bg-slate-100 aspect-square rounded-2xl overflow-hidden border relative shadow-md">
+                  <Image
+                    src="/images/infrastructure/liquid-line.png"
+                    alt="Liquid oral syrup filling line"
+                    fill
+                    className="object-cover"
+                  />
                 </div>
-                <div className="bg-primary/5 aspect-square rounded-2xl flex items-center justify-center p-6 border border-primary/10 text-center">
-                  <span className="text-primary/60 font-medium text-sm">Packaging Area</span>
+                <div className="aspect-square rounded-2xl overflow-hidden border relative shadow-md">
+                  <Image
+                    src="/images/infrastructure/packaging.png"
+                    alt="Automated blister packaging area"
+                    fill
+                    className="object-cover"
+                  />
                 </div>
               </div>
             </div>

@@ -19,7 +19,7 @@ export const blogPosts: BlogPost[] = [
     date: "2024-03-15",
     author: "Supracyn Quality Team",
     category: "Manufacturing",
-    imageUrl: "/images/blog/manufacturing-placeholder.jpg",
+    imageUrl: "/images/blog/manufacturing.jpg",
     content: "<p>Quality control in solid dosage manufacturing has reached new heights...</p>",
   },
   {
@@ -30,7 +30,7 @@ export const blogPosts: BlogPost[] = [
     date: "2024-02-28",
     author: "Regulatory Affairs",
     category: "Compliance",
-    imageUrl: "/images/blog/compliance-placeholder.jpg",
+    imageUrl: "/images/blog/compliance.jpg",
     content: "<p>The WHO Good Manufacturing Practices (GMP) serve as the backbone...</p>",
   },
   {
@@ -41,7 +41,7 @@ export const blogPosts: BlogPost[] = [
     date: "2024-02-10",
     author: "Supracyn Business Development",
     category: "Partnerships",
-    imageUrl: "/images/blog/partnerships-placeholder.jpg",
+    imageUrl: "/images/blog/partnerships.jpg",
     content: "<p>A robust pharmaceutical supply chain depends on strong partnerships...</p>",
   }
 ];

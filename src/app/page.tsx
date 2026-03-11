@@ -3,11 +3,30 @@ import { TrustSignalsStrip } from "@/components/blocks/trust-signals";
 import { ProductCard } from "@/components/blocks/product-card";
 import { products } from "@/data/products";
 import { therapyAreas } from "@/data/therapy-areas";
-import { blogPosts } from "@/data/blog-posts";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, CheckCircle2 } from "lucide-react";
+import {
+  ArrowRight,
+  CheckCircle2,
+  Activity,
+  Brain,
+  ShieldPlus,
+  Stethoscope,
+  Wind,
+  Pill,
+  type LucideIcon,
+} from "lucide-react";
+
+/** Maps the iconName strings used in therapy-areas data to Lucide components */
+const THERAPY_ICON_MAP: Record<string, LucideIcon> = {
+  Activity,
+  Brain,
+  ShieldPlus,
+  Stethoscope,
+  Wind,
+  Pill,
+};
 
 export default function Home() {
   const featuredProducts = products.slice(0, 3);
@@ -82,10 +101,12 @@ export default function Home() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {therapyAreas.slice(0, 6).map((area) => (
+            {therapyAreas.slice(0, 6).map((area) => {
+              const Icon = THERAPY_ICON_MAP[area.iconName] ?? Pill;
+              return (
               <div key={area.id} className="bg-white p-8 rounded-2xl border border-slate-100 hover:border-primary/20 hover:shadow-md transition-all group">
                 <div className="h-12 w-12 rounded-xl bg-slate-50 flex items-center justify-center text-primary mb-6 group-hover:bg-primary/5 group-hover:scale-110 transition-all duration-300">
-                  <span className="text-sm font-medium">Icon</span> {/* Assuming dynamic lucide import is tricky in generic map, using placeholder */}
+                  <Icon className="h-6 w-6" aria-hidden="true" />
                 </div>
                 <h3 className="text-xl font-bold text-slate-900 mb-3">{area.name}</h3>
                 <p className="text-slate-600 mb-6 line-clamp-2">{area.description}</p>
@@ -93,7 +114,8 @@ export default function Home() {
                   Explore Products <ArrowRight className="ml-1 h-4 w-4" />
                 </Link>
               </div>
-            ))}
+            );
+            })}
           </div>
         </div>
       </section>
