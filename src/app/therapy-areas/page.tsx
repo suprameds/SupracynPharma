@@ -2,7 +2,7 @@ import { PageHeader } from "@/components/blocks/page-header";
 import { therapyAreas } from "@/data/therapy-areas";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { ArrowRight, Pill, Activity, Heart, Thermometer, ShieldCheck, Microscope } from "lucide-react";
+import { ArrowRight, Pill, Activity, Heart, HeartPulse, Microscope } from "lucide-react";
 import Image from "next/image";
 
 export const metadata = {
@@ -35,7 +35,7 @@ export default function TherapyAreasPage() {
                 <div className="flex-1 space-y-6">
                   <div className="inline-flex items-center justify-center h-16 w-16 rounded-2xl bg-primary/10 text-primary mb-2 shadow-sm border border-primary/20">
                     {index === 0 && <Activity className="h-8 w-8" />}
-                    {index === 1 && <Pulse className="h-8 w-8" />}
+                    {index === 1 && <HeartPulse className="h-8 w-8" />}
                     {index === 2 && <Heart className="h-8 w-8" />}
                     {index === 3 && <Microscope className="h-8 w-8" />}
                     {index > 3 && <Pill className="h-8 w-8" />}

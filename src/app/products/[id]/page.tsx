@@ -4,7 +4,7 @@ import { PageHeader } from "@/components/blocks/page-header";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { ArrowLeft, ArrowUpRight, ShieldCheck, Box } from "lucide-react";
+import { ArrowLeft, ArrowUpRight, ShieldCheck } from "lucide-react";
 import Image from "next/image";
 
 export function generateStaticParams() {
@@ -13,13 +13,12 @@ export function generateStaticParams() {
   }));
 }
 
-export default async function ProductDetailPage({ 
-  params 
-}: { 
-  params: Promise<{ id: string }> 
+export default async function ProductDetailPage({
+  params,
+}: {
+  params: { id: string };
 }) {
-  const resolvedParams = await params;
-  const product = products.find((p) => p.id === resolvedParams.id);
+  const product = products.find((p) => p.id === params.id);
   
   if (!product) {
     notFound();

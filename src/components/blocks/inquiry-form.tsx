@@ -14,16 +14,62 @@ interface InquiryFormProps {
 export function InquiryForm({ type = "general", prefillProduct }: InquiryFormProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError(null);
     setIsSubmitting(true);
-    
-    // Simulate API call
-    setTimeout(() => {
+
+    const form = e.target as HTMLFormElement;
+    const formData = new FormData(form);
+
+    const payload = {
+      firstName: formData.get("firstName")?.toString() ?? "",
+      lastName: formData.get("lastName")?.toString() ?? "",
+      company: formData.get("company")?.toString() ?? "",
+      email: formData.get("email")?.toString() ?? "",
+      phone: formData.get("phone")?.toString() ?? "",
+      message: formData.get("message")?.toString() ?? "",
+      type,
+      partnershipType:
+        type === "partnership"
+          ? formData.get("partnershipType")?.toString() ?? ""
+          : undefined,
+      product:
+        type === "product"
+          ? formData.get("product")?.toString() ?? prefillProduct ?? ""
+          : undefined,
+    };
+
+    try {
+      const res = await fetch("/api/inquiry", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+
+      if (!res.ok) {
+        const data = await res.json().catch(() => null);
+        setError(
+          data?.error ??
+            "We were unable to submit your inquiry. Please try again shortly.",
+        );
+        setIsSubmitting(false);
+        return;
+      }
+
       setIsSubmitting(false);
       setIsSuccess(true);
-    }, 1500);
+      form.reset();
+    } catch {
+      setError(
+        "We were unable to submit your inquiry due to a network error. Please try again.",
+      );
+      setIsSubmitting(false);
+    }
   };
 
   if (isSuccess) {
@@ -54,27 +100,44 @@ export function InquiryForm({ type = "general", prefillProduct }: InquiryFormPro
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="space-y-2">
           <Label htmlFor="firstName">First Name</Label>
-          <Input id="firstName" required placeholder="John" />
+          <Input id="firstName" name="firstName" required placeholder="John" />
         </div>
         <div className="space-y-2">
           <Label htmlFor="lastName">Last Name</Label>
-          <Input id="lastName" required placeholder="Doe" />
+          <Input id="lastName" name="lastName" required placeholder="Doe" />
         </div>
       </div>
       
       <div className="space-y-2">
         <Label htmlFor="company">Company / Institution Name</Label>
-        <Input id="company" required placeholder="Your Organization Ltd." />
+        <Input
+          id="company"
+          name="company"
+          required
+          placeholder="Your Organization Ltd."
+        />
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="space-y-2">
           <Label htmlFor="email">Business Email</Label>
-          <Input id="email" type="email" required placeholder="john@company.com" />
+          <Input
+            id="email"
+            name="email"
+            type="email"
+            required
+            placeholder="john@company.com"
+          />
         </div>
         <div className="space-y-2">
           <Label htmlFor="phone">Phone Number</Label>
-          <Input id="phone" type="tel" required placeholder="+1 (555) 000-0000" />
+          <Input
+            id="phone"
+            name="phone"
+            type="tel"
+            required
+            placeholder="+1 (555) 000-0000"
+          />
         </div>
       </div>
       
@@ -83,10 +146,13 @@ export function InquiryForm({ type = "general", prefillProduct }: InquiryFormPro
           <Label htmlFor="partnershipType">Partnership Interest</Label>
           <select 
             id="partnershipType"
+            name="partnershipType"
             className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
             required
           >
-            <option value="" disabled selected>Select an option</option>
+            <option value="" disabled>
+              Select an option
+            </option>
             <option value="distributor">Distributor / Wholesaler</option>
             <option value="pharmacy">Pharmacy Chain</option>
             <option value="hospital">Hospital / Institutional Buyer</option>
@@ -99,7 +165,13 @@ export function InquiryForm({ type = "general", prefillProduct }: InquiryFormPro
       {type === "product" && (
         <div className="space-y-2">
           <Label htmlFor="product">Product of Interest</Label>
-          <Input id="product" defaultValue={prefillProduct} required placeholder="Product name or generic composition" />
+          <Input
+            id="product"
+            name="product"
+            defaultValue={prefillProduct}
+            required
+            placeholder="Product name or generic composition"
+          />
         </div>
       )}
 
@@ -107,11 +179,18 @@ export function InquiryForm({ type = "general", prefillProduct }: InquiryFormPro
         <Label htmlFor="message">Message / Details</Label>
         <Textarea 
           id="message" 
+          name="message"
           required 
           placeholder="Please describe your business requirements..." 
           className="min-h-[120px]"
         />
       </div>
+
+      {error && (
+        <p className="text-sm text-red-600" aria-live="polite">
+          {error}
+        </p>
+      )}
 
       <Button type="submit" size="lg" className="w-full md:w-auto" disabled={isSubmitting}>
         {isSubmitting ? "Submitting..." : "Submit Inquiry"}
