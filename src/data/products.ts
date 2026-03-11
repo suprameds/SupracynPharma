@@ -10,6 +10,8 @@ export type Product = {
   highlights: string[];
   packagingStorage: string;
   isAvailableOnline: boolean;
+  /** Relative path under /public for the product packaging image */
+  imageUrl: string;
 };
 
 export const products: Product[] = [
@@ -25,6 +27,7 @@ export const products: Product[] = [
     highlights: ["High bioavailability", "Effective against beta-lactamase producing strains", "WHO-GMP certified manufacturing"],
     packagingStorage: "Store below 25°C, protected from moisture. Keep out of reach of children.",
     isAvailableOnline: true,
+    imageUrl: "/images/products/supra-cv-625.png",
   },
   {
     id: "supra-pan-40",
@@ -38,6 +41,7 @@ export const products: Product[] = [
     highlights: ["Rapid acid suppression", "Extended duration of action", "Excellent safety profile"],
     packagingStorage: "Store protected from light and moisture, at a temperature not exceeding 30°C.",
     isAvailableOnline: true,
+    imageUrl: "/images/products/supra-pan-40.png",
   },
   {
     id: "supratuss-dx",
@@ -51,6 +55,7 @@ export const products: Product[] = [
     highlights: ["Non-drowsy formulation", "Fast-acting relief", "Sugar-free base available"],
     packagingStorage: "Store in a cool, dry place away from direct sunlight.",
     isAvailableOnline: false,
+    imageUrl: "/images/products/supratuss-dx.png",
   },
   {
     id: "supracard-10",
@@ -64,6 +69,7 @@ export const products: Product[] = [
     highlights: ["Significantly lowers LDL-C", "Improves overall lipid profile", "Convenient once-daily dosing"],
     packagingStorage: "Store below 30°C in a dry place. Protect from light.",
     isAvailableOnline: false,
+    imageUrl: "/images/products/supracard-10.png",
   },
   {
     id: "supranerv-plus",
@@ -77,5 +83,6 @@ export const products: Product[] = [
     highlights: ["Restores nerve function", "Reduces pain signaling", "Well-tolerated profile"],
     packagingStorage: "Store in a dry place below 25°C.",
     isAvailableOnline: true,
+    imageUrl: "/images/products/supranerv-plus.png",
   }
 ];

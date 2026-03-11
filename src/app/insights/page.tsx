@@ -29,8 +29,8 @@ export default function InsightsPage() {
               <Link key={post.id} href={`/insights/${post.slug}`}>
                 <Card className="h-full hover:shadow-lg transition-shadow duration-300 border-slate-200 overflow-hidden bg-white group cursor-pointer flex flex-col">
                   <div className="aspect-[16/9] bg-slate-100 relative overflow-hidden">
-                    <Image 
-                      src="/images/logistics_distribution.png" 
+                    <Image
+                      src={post.imageUrl}
                       alt={post.title}
                       fill
                       className="object-cover group-hover:scale-105 transition-transform duration-500"

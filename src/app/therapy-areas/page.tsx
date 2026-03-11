@@ -59,8 +59,8 @@ export default function TherapyAreasPage() {
 
                 <div className="flex-1 w-full relative">
                   <div className="aspect-[4/3] bg-slate-50 rounded-2xl border border-slate-100 flex items-center justify-center overflow-hidden relative z-10 shadow-lg">
-                    <Image 
-                      src="/images/facility_infrastructure.png" 
+                    <Image
+                      src={area.imageUrl}
                       alt={area.name}
                       fill
                       className="object-cover opacity-90 transition-opacity hover:opacity-100 duration-500"

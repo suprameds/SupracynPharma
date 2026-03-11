@@ -3,7 +3,7 @@ import { InquiryForm } from "@/components/blocks/inquiry-form";
 
 describe("InquiryForm", () => {
   it("submits the form and shows success when API returns ok", async () => {
-    const fetchSpy = vi.spyOn(global, "fetch" as any).mockResolvedValue({
+    const fetchSpy = jest.spyOn(global, "fetch").mockResolvedValue({
       ok: true,
       json: async () => ({ ok: true }),
     } as Response);
@@ -49,5 +49,27 @@ describe("InquiryForm", () => {
 
     fetchSpy.mockRestore();
   });
-}
+
+  it("shows an error message when the API returns a non-ok response", async () => {
+    jest.spyOn(global, "fetch").mockResolvedValue({
+      ok: false,
+      json: async () => ({ error: "Server error" }),
+    } as Response);
+
+    render(<InquiryForm />);
+
+    fireEvent.change(screen.getByLabelText(/First Name/i), { target: { value: "Jane" } });
+    fireEvent.change(screen.getByLabelText(/Last Name/i), { target: { value: "Smith" } });
+    fireEvent.change(screen.getByLabelText(/Company \/ Institution Name/i), { target: { value: "Pharma Co" } });
+    fireEvent.change(screen.getByLabelText(/Business Email/i), { target: { value: "jane@pharma.com" } });
+    fireEvent.change(screen.getByLabelText(/Phone Number/i), { target: { value: "+91 9000000000" } });
+    fireEvent.change(screen.getByLabelText(/Message \/ Details/i), { target: { value: "Testing error handling flow." } });
+
+    fireEvent.click(screen.getByRole("button", { name: /Submit Inquiry/i }));
+
+    await waitFor(() => {
+      expect(screen.getByRole("paragraph")).toHaveTextContent(/Server error/i);
+    });
+  });
+});
 

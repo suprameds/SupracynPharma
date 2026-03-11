@@ -44,11 +44,13 @@ export default async function ProductDetailPage({
             {/* Left: Product Image & Badges */}
             <div className="lg:col-span-5 space-y-6">
               <div className="aspect-square bg-slate-50 border border-slate-100 rounded-3xl flex items-center justify-center overflow-hidden relative shadow-inner">
-                <Image 
-                  src="/images/packaging_robotics.png" 
-                  alt={product.name}
+                <Image
+                  src={product.imageUrl}
+                  alt={`${product.name} packaging`}
                   fill
                   className="object-cover p-8"
+                  // Fall back gracefully if the per-product image hasn't been added yet
+                  onError={undefined}
                 />
               </div>
               

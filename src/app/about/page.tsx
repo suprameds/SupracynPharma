@@ -1,6 +1,5 @@
 import { PageHeader } from "@/components/blocks/page-header";
 import { TrustSignalsStrip } from "@/components/blocks/trust-signals";
-import { User } from "lucide-react";
 
 export const metadata = {
   title: "About Us | Supracyn Pharma",
@@ -74,17 +73,37 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Leadership Note Placeholder */}
+      {/* Leadership */}
       <section className="py-20 bg-slate-50 border-y border-slate-200">
-        <div className="container mx-auto px-4 md:px-8 max-w-4xl text-center">
-          <div className="w-24 h-24 bg-slate-200 rounded-full mx-auto mb-6 flex items-center justify-center overflow-hidden">
-            <User className="h-10 w-10 text-slate-400" />
+        <div className="container mx-auto px-4 md:px-8 max-w-4xl">
+          <h2 className="text-3xl font-bold text-slate-900 text-center mb-12">Leadership</h2>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+            {[
+              { name: "Managing Director", title: "Managing Director", initials: "MD" },
+              { name: "Chief Operating Officer", title: "Chief Operating Officer", initials: "CO" },
+              { name: "Head of Quality Assurance", title: "Head of Quality Assurance", initials: "QA" },
+            ].map((person) => (
+              <div key={person.title} className="bg-white rounded-2xl border border-slate-100 p-6 text-center shadow-sm">
+                {/* Replace the initials div with a real <Image> once photos are available */}
+                <div
+                  className="w-20 h-20 rounded-full bg-primary/10 text-primary font-bold text-xl flex items-center justify-center mx-auto mb-4"
+                  aria-hidden="true"
+                >
+                  {person.initials}
+                </div>
+                <div className="text-base font-bold text-slate-900">{person.name}</div>
+                <div className="text-sm text-slate-500 mt-1">{person.title}, Supracyn Pharma</div>
+              </div>
+            ))}
           </div>
-          <blockquote className="text-2xl md:text-3xl font-medium text-slate-800 leading-relaxed mb-8">
-            &quot;Our commitment to quality is not just a regulatory requirement; it is a moral obligation to the patients who rely on our formulations every day.&quot;
+
+          <blockquote className="mt-16 text-center">
+            <p className="text-2xl md:text-3xl font-medium text-slate-800 leading-relaxed mb-6">
+              &ldquo;Our commitment to quality is not just a regulatory requirement; it is a moral obligation to the patients who rely on our formulations every day.&rdquo;
+            </p>
+            <footer className="text-slate-500 text-sm">— Managing Director, Supracyn Pharma</footer>
           </blockquote>
-          <div className="text-lg font-bold text-slate-900">Leadership Placeholder</div>
-          <div className="text-slate-500">Managing Director, Supracyn Pharma</div>
         </div>
       </section>
 

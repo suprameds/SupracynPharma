@@ -10,7 +10,8 @@ const config: Config = {
     "^.+\\.(t|j)sx?$": [
       "ts-jest",
       {
-        tsconfig: "<rootDir>/tsconfig.json",
+        // Use a Jest-compatible tsconfig (Node module resolution instead of "bundler")
+        tsconfig: "<rootDir>/tsconfig.jest.json",
       },
     ],
   },

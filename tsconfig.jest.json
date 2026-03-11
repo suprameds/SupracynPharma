@@ -1,0 +1,8 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    // ts-jest uses Node's module resolver, which doesn't understand "bundler" resolution
+    "moduleResolution": "node",
+    "module": "commonjs"
+  }
+}

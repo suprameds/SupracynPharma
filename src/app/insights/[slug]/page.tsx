@@ -45,13 +45,13 @@ export default async function BlogPostPage({
           </header>
 
           <div className="aspect-[21/9] w-full bg-slate-100 rounded-3xl overflow-hidden mb-12 relative shadow-lg">
-          <Image 
-            src="/images/logistics_distribution.png" 
-            alt={post.title}
-            fill
-            className="object-cover"
-            priority
-          />
+            <Image
+              src={post.imageUrl}
+              alt={post.title}
+              fill
+              className="object-cover"
+              priority
+            />
         </div>
 
           <div 

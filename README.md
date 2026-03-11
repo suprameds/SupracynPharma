@@ -1,36 +1,41 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Cursor Power Kit for Next.js
 
-## Getting Started
+This kit is a stronger `.cursor` setup for:
+- Next.js App Router
+- TypeScript
+- Tailwind CSS
+- Supabase / PostgreSQL
 
-First, run the development server:
+## Includes
+- 10 custom agents
+- 24 reusable skills
+- strong rules and project context
+- MCP setup templates
+- workflow docs
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Install
+1. Unzip the archive.
+2. Copy the `.cursor` folder into your project root.
+3. Merge with any existing `.cursor` folder.
+4. Restart Cursor.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Folder layout
+- `.cursor/agents` → specialized subagents
+- `.cursor/skills` → reusable workflows
+- `.cursor/mcp` → MCP templates
+- `.cursor/rules.md` → global engineering rules
+- `.cursor/context.md` → project context
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Example prompts
+- Use `next-architect` to design a scalable dashboard structure.
+- Use `db-agent` to model orders, customers, and prescriptions.
+- Run `/build-feature` for a patient dashboard.
+- Run `/fix-bug` for a hydration mismatch on the checkout page.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Recommended daily workflow
+1. Use `next-architect` for planning.
+2. Use `db-agent` if schema changes are needed.
+3. Use `api-backend-agent` or `data-fetching-agent` for server work.
+4. Use `ui-builder` for interface work.
+5. Use `qa-debug-agent` to verify and fix issues.
+6. Use `perf-seo-agent` before release.
