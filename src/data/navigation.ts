@@ -44,9 +44,9 @@ export const footerNavigation = {
     { label: "Suprameds (Online Order)", href: "/buy-suprameds" },
   ],
   partnerships: [
-    { label: "Distributor Inquiry", href: "/partnerships#distributors" },
-    { label: "Third-Party Manufacturing", href: "/partnerships#manufacturing" },
-    { label: "Hospital Supply", href: "/partnerships#institutions" },
+    { label: "Distributor Inquiry", href: "/partnerships" },
+    { label: "Pharmacy & Retail Partners", href: "/partnerships" },
+    { label: "Hospital & Institutional Supply", href: "/partnerships" },
   ],
   legal: [
     { label: "Privacy Policy", href: "/privacy" },

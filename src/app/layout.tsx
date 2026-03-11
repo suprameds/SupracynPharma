@@ -12,17 +12,18 @@ const BASE_URL = "https://supracynpharma.com";
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
   title: {
-    default: "Supracyn Pharma | Pharmaceutical Manufacturing Excellence",
+    default: "Supracyn Pharma | Trusted Pharmaceutical Brand",
     template: "%s | Supracyn Pharma",
   },
   description:
-    "Supracyn Pharma is a WHO-GMP certified pharmaceutical manufacturer delivering high-quality formulations across 25+ countries. Explore our products, therapy areas, and partnership opportunities.",
+    "Supracyn Pharma is a trusted pharmaceutical brand marketing quality, doctor-recommended medicines across India and 25+ international markets. Explore our product portfolio, therapy areas, and distribution partnerships.",
   keywords: [
-    "pharmaceutical manufacturer",
-    "WHO-GMP certified",
-    "generic medicines",
-    "contract manufacturing",
-    "pharma export India",
+    "Supracyn",
+    "pharmaceutical brand India",
+    "branded medicines",
+    "pharma marketing company",
+    "generic medicines India",
+    "pharma distribution partner",
   ],
   authors: [{ name: "Supracyn Pharma", url: BASE_URL }],
   openGraph: {
@@ -30,9 +31,9 @@ export const metadata: Metadata = {
     locale: "en_IN",
     url: BASE_URL,
     siteName: "Supracyn Pharma",
-    title: "Supracyn Pharma | Pharmaceutical Manufacturing Excellence",
+    title: "Supracyn Pharma | Trusted Pharmaceutical Brand",
     description:
-      "WHO-GMP certified pharmaceutical manufacturer. 500+ approved formulations. Exporting to 25+ countries.",
+      "Supracyn — quality branded medicines trusted by doctors across 25+ countries. 500+ formulations. 6 therapy areas.",
     images: [
       {
         url: "/images/hero_corporate.png",
@@ -44,9 +45,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Supracyn Pharma | Pharmaceutical Manufacturing Excellence",
+    title: "Supracyn Pharma | Trusted Pharmaceutical Brand",
     description:
-      "WHO-GMP certified pharmaceutical manufacturer. 500+ approved formulations. Exporting to 25+ countries.",
+      "Supracyn — quality branded medicines trusted by doctors across 25+ countries. 500+ formulations. 6 therapy areas.",
     images: ["/images/hero_corporate.png"],
   },
   icons: {

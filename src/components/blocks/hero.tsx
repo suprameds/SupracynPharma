@@ -57,7 +57,7 @@ export function Hero({
             {/* Trust badge */}
             <div className="inline-flex items-center gap-2 self-start bg-primary/5 border border-primary/15 text-primary text-sm font-semibold px-4 py-1.5 rounded-full">
               <ShieldCheck className="h-4 w-4" aria-hidden="true" />
-              WHO-GMP Certified Manufacturer
+              A Trusted Pharmaceutical Brand
             </div>
 
             <div className="space-y-5">

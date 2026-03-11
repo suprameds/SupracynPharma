@@ -13,10 +13,10 @@ export function Footer() {
           <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
             <div>
               <h2 className="text-xl md:text-2xl font-bold text-white mb-1">
-                Ready to partner with us?
+                Distribute the Supracyn brand in your market
               </h2>
               <p className="text-slate-400 text-sm max-w-md">
-                Distributors, hospital networks, and private-label partners — reach out and our team will respond within 24 hours.
+                Distributors, pharmacy chains, and hospital procurement teams — reach out and our team will respond within 24 hours.
               </p>
             </div>
             <div className="flex flex-col sm:flex-row gap-3 flex-shrink-0">
@@ -50,7 +50,7 @@ export function Footer() {
               <span className="font-bold text-lg tracking-tight text-white">Supracyn Pharma</span>
             </Link>
             <p className="text-slate-400 text-sm leading-relaxed max-w-xs">
-              A WHO-GMP certified pharmaceutical manufacturer delivering safe, effective, and affordable formulations to 25+ countries.
+              Supracyn is a trusted pharmaceutical brand marketing quality, doctor-recommended medicines across India and 25+ international markets.
             </p>
             <div className="text-sm text-slate-400 space-y-1 pt-2">
               <p className="font-medium text-slate-300">Corporate Office</p>

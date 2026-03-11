@@ -9,27 +9,27 @@ export type TrustSignal = {
 
 export const trustSignals: TrustSignal[] = [
   {
-    id: "who-gmp",
-    title: "WHO-GMP Certified",
-    description: "State-of-the-art manufacturing facilities adhering strictly to global quality guidelines.",
+    id: "brand-quality",
+    title: "Quality You Can Trust",
+    description: "Every Supracyn-branded product is sourced from WHO-GMP certified facilities and meets international safety standards.",
     iconName: "ShieldCheck",
   },
   {
     id: "global-reach",
-    title: "Global Reach",
-    description: "Supplying trusted formulations and APIs to partners across 25+ countries worldwide.",
+    title: "Present in 25+ Markets",
+    description: "Supracyn products are available across India, Africa, the Middle East, and Southeast Asia.",
     iconName: "Globe",
   },
   {
-    id: "infrastructure",
-    title: "Robust Infrastructure",
-    description: "High-volume production capabilities spanning solid, liquid, and injectable dosage forms.",
+    id: "portfolio",
+    title: "500+ Formulations",
+    description: "A broad portfolio of Supracyn-branded medicines spanning 6 critical therapy areas.",
     iconName: "Factory",
   },
   {
-    id: "quality",
-    title: "Uncompromising Quality",
-    description: "Rigorous end-to-end testing from raw material sourcing to final batch release.",
+    id: "doctors-trust",
+    title: "Trusted by Doctors",
+    description: "Supracyn formulations are recommended by healthcare professionals and institutions across markets.",
     iconName: "Award",
   }
 ];

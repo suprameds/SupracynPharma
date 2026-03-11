@@ -34,9 +34,9 @@ export default function Home() {
   return (
     <div className="flex flex-col min-h-screen">
       {/* 1. Hero Section */}
-      <Hero 
-        title="Pioneering Excellence in Global Healthcare."
-        subtitle="Supracyn Pharma is a trusted multinational pharmaceutical manufacturer dedicated to rigorous quality standards and innovative formulations."
+      <Hero
+        title="Quality Medicines. Trusted Brand. Global Reach."
+        subtitle="Supracyn is a pharmaceutical brand bringing safe, effective, and affordable healthcare solutions to patients and providers across 25+ markets."
       />
 
       {/* 2. Trust Signals */}
@@ -74,13 +74,18 @@ export default function Home() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div className="space-y-6">
               <h2 className="text-3xl md:text-4xl font-bold text-slate-900 tracking-tight">
-                A Legacy of Trust and Manufacturing Excellence
+                The Supracyn Brand — Built on Quality and Reach
               </h2>
               <p className="text-lg text-slate-600 leading-relaxed">
-                For over two decades, Supracyn Pharma has been at the forefront of pharmaceutical manufacturing. We operate stringent WHO-GMP certified facilities, ensuring that every molecule we produce meets the highest global standards for safety, efficacy, and purity.
+                Supracyn Pharma markets a comprehensive range of branded pharmaceutical products across India and international markets. Our products — each carrying the Supracyn name — are sourced from WHO-GMP certified facilities and meet stringent global safety and efficacy standards.
               </p>
               <ul className="space-y-3 pt-4">
-                {["State-of-the-art R&D facilities", "Stringent quality control protocols", "Global regulatory compliance", "Scalable production capabilities"].map((item, i) => (
+                {[
+                  "Branded formulations across 6 therapy areas",
+                  "Products sourced from WHO-GMP certified facilities",
+                  "Trusted by doctors, hospitals, and pharmacies",
+                  "Distributed across 25+ countries"
+                ].map((item, i) => (
                   <li key={i} className="flex items-center text-slate-700">
                     <CheckCircle2 className="h-5 w-5 text-primary mr-3 flex-shrink-0" />
                     <span className="font-medium">{item}</span>
@@ -90,7 +95,7 @@ export default function Home() {
               <div className="pt-6">
                 <Link href="/about">
                   <Button variant="outline" size="lg">
-                    Discover Our Corporate Journey
+                    Discover Our Story
                   </Button>
                 </Link>
               </div>
@@ -173,7 +178,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 6. Manufacturing / Partner Section */}
+      {/* 6. Distribution Partnership Section */}
       <section className="py-24 relative overflow-hidden bg-slate-900 text-white">
         <div className="absolute inset-0 bg-[url('/images/pattern.svg')] opacity-5" />
         <div className="container mx-auto px-4 md:px-8 relative z-10">
@@ -181,10 +186,10 @@ export default function Home() {
             
             <div className="space-y-8">
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-white">
-                Partner for Scale, Quality, and Reliability
+                Bring Supracyn to Your Market
               </h2>
               <p className="text-lg text-slate-300 leading-relaxed">
-                Supracyn Pharma is actively expanding its global footprint. We invite distributors, hospital networks, pharmacy chains, and private label partners to collaborate with a manufacturer that guarantees consistent quality and robust supply chain security.
+                We are actively looking for distribution and institutional partners to carry Supracyn-branded products in their markets. If you are a distributor, pharmacy chain, or hospital network looking for a quality pharmaceutical brand, let&apos;s talk.
               </p>
               
               <div className="grid grid-cols-2 gap-6 pt-4">
@@ -238,10 +243,10 @@ export default function Home() {
               Direct to Consumer Access
             </div>
             <h2 className="text-3xl md:text-4xl font-bold text-slate-900 tracking-tight">
-              Looking to Purchase Online?
+              Order Supracyn Products Online
             </h2>
             <p className="text-lg text-slate-600 leading-relaxed mx-auto max-w-2xl">
-              While Supracyn Pharma operates as our corporate manufacturing entity, we provide a secure, separate eCommerce portal for direct purchases. Visit <strong className="text-slate-900">Suprameds.in</strong> to securely order our trusted products online.
+              Supracyn products are available for direct online purchase through our dedicated consumer platform. Visit <strong className="text-slate-900">Suprameds.in</strong> for safe, verified home delivery of your trusted Supracyn medicines.
             </p>
             <div className="pt-4 flex flex-col sm:flex-row justify-center gap-4">
               <Link href="/buy-suprameds">
