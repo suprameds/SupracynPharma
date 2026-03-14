@@ -121,14 +121,17 @@ export default async function ProductsPage({
                     {products.map((product) => {
                       const colors = CATEGORY_COLORS[product.category] ?? CATEGORY_COLORS.miscellaneous;
                       return (
-                        <div
+                        <Link
                           key={product.id}
-                          className="grid grid-cols-1 md:grid-cols-12 gap-2 md:gap-4 px-5 py-4 hover:bg-slate-50/80 transition-colors"
+                          href={`/products/${product.id}`}
+                          className="group grid grid-cols-1 md:grid-cols-12 gap-2 md:gap-4 px-5 py-4 hover:bg-slate-50/80 hover:shadow-md rounded-xl transition-colors cursor-pointer"
                         >
                           {/* Brand name */}
                           <div className="md:col-span-4 flex items-center gap-3">
                             <div className={`h-2 w-2 rounded-full flex-shrink-0 ${colors.bg.replace("bg-", "bg-").replace("-50", "-400")}`} />
-                            <span className="font-bold text-slate-900 text-sm">{product.name}</span>
+                            <span className="font-bold text-slate-900 text-sm group-hover:text-primary transition-colors">
+                              {product.name}
+                            </span>
                           </div>
 
                           {/* Composition */}
@@ -147,7 +150,12 @@ export default async function ProductsPage({
                           <div className="md:col-span-1 pl-5 md:pl-0 text-xs text-slate-400 font-medium">
                             {product.form}
                           </div>
-                        </div>
+
+                          {/* View details indicator (mobile) */}
+                          <div className="md:hidden col-span-full flex items-center gap-1 text-xs text-primary font-semibold pt-2">
+                            View Details <ArrowRight className="h-3 w-3" />
+                          </div>
+                        </Link>
                       );
                     })}
                   </div>
