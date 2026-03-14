@@ -8,7 +8,7 @@ import { X } from "lucide-react";
  * Replace WHATSAPP_NUMBER with your actual WhatsApp business number in international format
  * e.g. "919876543210" for India number +91 98765 43210
  */
-const WHATSAPP_NUMBER = "919000000000";
+const WHATSAPP_NUMBER = "919182027651";
 const WHATSAPP_MESSAGE =
   "Hello, I would like to inquire about Supracyn Pharma products and distribution partnerships.";
 

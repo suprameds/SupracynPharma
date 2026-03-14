@@ -1,216 +1,113 @@
 import React from "react";
-import { render, screen, within } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import "@testing-library/jest-dom";
 import { ProductsFilter } from "@/components/blocks/products-filter";
 
-// Required mocks for Next.js components used by ProductCard
-jest.mock("next/link", () => ({
-  __esModule: true,
-  default: ({ children, href }: { children: React.ReactNode; href: string }) => (
-    <a href={href}>{children}</a>
-  ),
+// Mock Next.js navigation hooks
+const mockPush = jest.fn();
+jest.mock("next/navigation", () => ({
+  useRouter: () => ({ push: mockPush }),
+  usePathname: () => "/products",
+  useTransition: () => [false, (fn: () => void) => fn()],
 }));
-jest.mock("next/image", () => ({
-  __esModule: true,
-  default: ({ src, alt }: { src: string; alt: string }) => <img src={src as string} alt={alt as string} />,
-}));
+// useTransition is a React hook — mock at React level
+jest.spyOn(React, "useTransition").mockReturnValue([false, (fn) => fn()]);
 
-type MockProduct = {
-  id: string;
-  name: string;
-  genericName: string;
-  therapyAreaId: string;
-  dosageForm: string;
-  strength: string;
-  packSize: string;
-  summary: string;
-  highlights: string[];
-  packagingStorage: string;
-  isAvailableOnline: boolean;
-  imageUrl: string;
-};
-
-type MockTherapyArea = {
-  id: string;
-  name: string;
-  description: string;
-  iconName: string;
-  imageUrl: string;
-};
-
-const therapyAreas: MockTherapyArea[] = [
-  { id: "ta-cardio", name: "Cardiology", description: "Heart", iconName: "heart", imageUrl: "/ta/cardio.jpg" },
-  { id: "ta-derm", name: "Dermatology", description: "Skin", iconName: "skin", imageUrl: "/ta/derm.jpg" },
+const mockCategoryCounts = [
+  { category: "cardiology", count: 176 },
+  { category: "diabetology", count: 88 },
+  { category: "anti-infectives", count: 41 },
 ];
 
-const products: MockProduct[] = [
-  {
-    id: "p-aspirin",
-    name: "Aspirin",
-    genericName: "Acetylsalicylic Acid",
-    therapyAreaId: "ta-cardio",
-    dosageForm: "Tablet",
-    strength: "100 mg",
-    packSize: "10",
-    summary: "Pain relief",
-    highlights: ["Analgesic"],
-    packagingStorage: "Room temperature",
-    isAvailableOnline: true,
-    imageUrl: "/img/aspirin.png",
-  },
-  {
-    id: "p-zincovit",
-    name: "Zincovit",
-    genericName: "Zinc + Vitamins",
-    therapyAreaId: "ta-cardio",
-    dosageForm: "Syrup",
-    strength: "5 mg/5ml",
-    packSize: "150 ml",
-    summary: "Supplement",
-    highlights: ["Immunity"],
-    packagingStorage: "Cool place",
-    isAvailableOnline: false,
-    imageUrl: "/img/zincovit.png",
-  },
-  {
-    id: "p-betacream",
-    name: "Beta Cream",
-    genericName: "Betamethasone",
-    therapyAreaId: "ta-derm",
-    dosageForm: "Cream",
-    strength: "0.1%",
-    packSize: "30 g",
-    summary: "Topical steroid",
-    highlights: ["Anti-inflammatory"],
-    packagingStorage: "Away from sunlight",
-    isAvailableOnline: true,
-    imageUrl: "/img/beta-cream.png",
-  },
-];
-
-function renderComponent() {
-  return render(<ProductsFilter products={products} therapyAreas={therapyAreas} />);
-}
-
-function getProductLinkByName(name: string) {
-  return screen.queryByRole("link", { name: new RegExp(name, "i") });
-}
-
-function expectInOrder(a: HTMLElement, b: HTMLElement) {
-  // a should appear before b in DOM order
-  const relation = a.compareDocumentPosition(b);
-  expect(relation & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+function renderComponent(overrides?: {
+  activeCategory?: string;
+  activeSearch?: string;
+  activeForm?: string;
+}) {
+  return render(
+    <ProductsFilter
+      categoryCounts={mockCategoryCounts}
+      activeCategory={overrides?.activeCategory ?? "all"}
+      activeSearch={overrides?.activeSearch ?? ""}
+      activeForm={overrides?.activeForm ?? "all"}
+    />
+  );
 }
 
 describe("ProductsFilter", () => {
-  it("renders all products by default", () => {
-    renderComponent();
-    expect(screen.getByText(/Showing 3 of 3 products/i)).toBeInTheDocument();
-    expect(getProductLinkByName("Aspirin")).toBeInTheDocument();
-    expect(getProductLinkByName("Zincovit")).toBeInTheDocument();
-    expect(getProductLinkByName("Beta Cream")).toBeInTheDocument();
+  beforeEach(() => {
+    mockPush.mockClear();
   });
 
-  it("filters by therapy area", async () => {
+  it("renders category list with counts", () => {
+    renderComponent();
+    expect(screen.getByText("Cardiology")).toBeInTheDocument();
+    expect(screen.getByText("176")).toBeInTheDocument();
+    expect(screen.getByText("Diabetology")).toBeInTheDocument();
+    expect(screen.getByText("88")).toBeInTheDocument();
+  });
+
+  it("shows All Categories option", () => {
+    renderComponent();
+    expect(screen.getByRole("button", { name: /all categories/i })).toBeInTheDocument();
+  });
+
+  it("navigates to category URL when a category is clicked", async () => {
     const user = userEvent.setup();
     renderComponent();
 
-    await user.click(screen.getByRole("button", { name: /Cardiology/i }));
-
-    expect(screen.getByText(/Showing 2 of 3 products/i)).toBeInTheDocument();
-    expect(getProductLinkByName("Aspirin")).toBeInTheDocument();
-    expect(getProductLinkByName("Zincovit")).toBeInTheDocument();
-    expect(getProductLinkByName("Beta Cream")).not.toBeInTheDocument();
+    await user.click(screen.getByRole("button", { name: /cardiology/i }));
+    expect(mockPush).toHaveBeenCalledWith(expect.stringContaining("category=cardiology"));
   });
 
-  it("filters by dosage form checkbox", async () => {
+  it("clears category when All Categories is clicked", async () => {
+    const user = userEvent.setup();
+    renderComponent({ activeCategory: "cardiology" });
+
+    await user.click(screen.getByRole("button", { name: /all categories/i }));
+    // URL should not contain category param
+    const calledUrl: string = mockPush.mock.calls[0][0];
+    expect(calledUrl).not.toContain("category=");
+  });
+
+  it("shows clear filters button when filters are active", () => {
+    renderComponent({ activeCategory: "cardiology" });
+    expect(screen.getByRole("button", { name: /clear all filters/i })).toBeInTheDocument();
+  });
+
+  it("does not show clear filters button when no filters active", () => {
+    renderComponent();
+    expect(screen.queryByRole("button", { name: /clear all filters/i })).not.toBeInTheDocument();
+  });
+
+  it("renders search input", () => {
+    renderComponent();
+    expect(screen.getByPlaceholderText(/brand name or ingredient/i)).toBeInTheDocument();
+  });
+
+  it("submits search and navigates", async () => {
     const user = userEvent.setup();
     renderComponent();
 
-    const tabletCheckbox = screen.getByRole("checkbox", { name: /Tablet/i });
-    await user.click(tabletCheckbox);
+    const input = screen.getByPlaceholderText(/brand name or ingredient/i);
+    await user.type(input, "Metformin");
+    await user.click(screen.getByRole("button", { name: /^search$/i }));
 
-    expect(screen.getByText(/Showing 1 of 3 products/i)).toBeInTheDocument();
-    expect(getProductLinkByName("Aspirin")).toBeInTheDocument();
-    expect(getProductLinkByName("Zincovit")).not.toBeInTheDocument();
-    expect(getProductLinkByName("Beta Cream")).not.toBeInTheDocument();
+    expect(mockPush).toHaveBeenCalledWith(expect.stringContaining("search=Metformin"));
   });
 
-  it("combines therapy area and dosage form filters", async () => {
-    const user = userEvent.setup();
+  it("renders dosage form filter chips", () => {
     renderComponent();
-
-    await user.click(screen.getByRole("button", { name: /Cardiology/i }));
-    await user.click(screen.getByRole("checkbox", { name: /Syrup/i }));
-
-    expect(screen.getByText(/Showing 1 of 3 products/i)).toBeInTheDocument();
-    expect(getProductLinkByName("Zincovit")).toBeInTheDocument();
-    expect(getProductLinkByName("Aspirin")).not.toBeInTheDocument();
-    expect(getProductLinkByName("Beta Cream")).not.toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /tablets/i })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /capsules/i })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /syrups/i })).toBeInTheDocument();
   });
 
-  it("shows empty state when no products match", async () => {
-    const user = userEvent.setup();
-    renderComponent();
-
-    await user.click(screen.getByRole("button", { name: /Dermatology/i }));
-    await user.click(screen.getByRole("checkbox", { name: /Tablet/i }));
-
-    expect(screen.getByText(/No products match your filters/i)).toBeInTheDocument();
-    // Clear button present in empty state
-    expect(screen.getByRole("button", { name: /clear (all )?filters/i })).toBeInTheDocument();
-  });
-
-  it("clears filters to show all products", async () => {
-    const user = userEvent.setup();
-    renderComponent();
-
-    // Create empty state first
-    await user.click(screen.getByRole("button", { name: /Dermatology/i }));
-    await user.click(screen.getByRole("checkbox", { name: /Tablet/i }));
-    expect(screen.getByText(/No products match your filters/i)).toBeInTheDocument();
-
-    // Click clear filters (supports both "Clear filters" and "Clear all filters")
-    await user.click(screen.getByRole("button", { name: /clear (all )?filters/i }));
-
-    expect(screen.getByText(/Showing 3 of 3 products/i)).toBeInTheDocument();
-    expect(getProductLinkByName("Aspirin")).toBeInTheDocument();
-    expect(getProductLinkByName("Zincovit")).toBeInTheDocument();
-    expect(getProductLinkByName("Beta Cream")).toBeInTheDocument();
-  });
-
-  it("sorts A–Z by default", () => {
-    renderComponent();
-
-    const aspirin = getProductLinkByName("Aspirin");
-    const beta = getProductLinkByName("Beta Cream");
-    const zincovit = getProductLinkByName("Zincovit");
-
-    expect(aspirin).toBeInTheDocument();
-    expect(beta).toBeInTheDocument();
-    expect(zincovit).toBeInTheDocument();
-
-    // Assert DOM order: Aspirin < Beta Cream < Zincovit
-    expectInOrder(aspirin as HTMLElement, beta as HTMLElement);
-    expectInOrder(beta as HTMLElement, zincovit as HTMLElement);
-  });
-
-  it("sorts by therapy area when selected", async () => {
-    const user = userEvent.setup();
-    renderComponent();
-
-    // Change sort dropdown to "Therapy Area"
-    const sortSelect = screen.getByRole("combobox");
-    await user.selectOptions(sortSelect, "Therapy Area");
-
-    const aspirin = getProductLinkByName("Aspirin") as HTMLElement;
-    const zincovit = getProductLinkByName("Zincovit") as HTMLElement;
-    const beta = getProductLinkByName("Beta Cream") as HTMLElement;
-
-    // Cardiology group should precede Dermatology group
-    expectInOrder(aspirin, beta);
-    expectInOrder(zincovit, beta);
+  it("highlights active category", () => {
+    renderComponent({ activeCategory: "diabetology" });
+    // Active category button has different styling — check aria/text
+    const btn = screen.getByRole("button", { name: /diabetology/i });
+    expect(btn).toBeInTheDocument();
   });
 });
-

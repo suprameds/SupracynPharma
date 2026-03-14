@@ -1,207 +1,237 @@
 "use client";
 
-import { useState, useMemo, useEffect } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
-import { SlidersHorizontal, ChevronDown } from "lucide-react";
-import { type Product } from "@/data/products";
-import { type TherapyArea } from "@/data/therapy-areas";
-import { ProductCard } from "@/components/blocks/product-card";
+import { useRouter, usePathname } from "next/navigation";
+import { useTransition, useState, useCallback } from "react";
+import { Search, SlidersHorizontal, X } from "lucide-react";
+import { CATEGORY_LABELS, CATEGORY_COLORS, type CategoryCount } from "@/lib/supabase-products";
 
-const DOSAGE_FORMS = ["Tablet", "Capsule", "Syrup", "Injectable"] as const;
+const FORM_OPTIONS = [
+  { value: "all", label: "All Forms" },
+  { value: "Tab", label: "Tablets" },
+  { value: "Cap", label: "Capsules" },
+  { value: "Syrup", label: "Syrups" },
+  { value: "Gel", label: "Gels" },
+  { value: "Cream", label: "Creams" },
+  { value: "Ointment", label: "Ointments" },
+  { value: "Drops", label: "Drops" },
+  { value: "Spray", label: "Sprays" },
+  { value: "Sachet", label: "Sachets" },
+  { value: "Lotion", label: "Lotions" },
+];
 
-type Props = {
-  products: Product[];
-  therapyAreas: TherapyArea[];
-  initialTherapy?: string;
-};
+interface ProductsFilterProps {
+  categoryCounts: CategoryCount[];
+  activeCategory: string;
+  activeSearch: string;
+  activeForm: string;
+}
 
-export function ProductsFilter({ products, therapyAreas, initialTherapy }: Props) {
+export function ProductsFilter({
+  categoryCounts,
+  activeCategory,
+  activeSearch,
+  activeForm,
+}: ProductsFilterProps) {
   const router = useRouter();
-  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const [isPending, startTransition] = useTransition();
+  const [search, setSearch] = useState(activeSearch);
+  const [mobileOpen, setMobileOpen] = useState(false);
 
-  const [selectedTherapy, setSelectedTherapy] = useState<string>(initialTherapy ?? "all");
-  const [selectedForms, setSelectedForms] = useState<Set<string>>(new Set());
-  const [sort, setSort] = useState<"az" | "therapy">("az");
-  const [showFilters, setShowFilters] = useState<boolean>(false);
+  const buildUrl = useCallback(
+    (overrides: Record<string, string>) => {
+      const params: Record<string, string> = {};
+      if (activeCategory !== "all") params.category = activeCategory;
+      if (search) params.search = search;
+      if (activeForm !== "all") params.form = activeForm;
+      Object.assign(params, overrides);
 
-  function pushTherapyToUrl(value: string) {
-    if (value === "all") {
-      router.push("/products");
-    } else {
-      const current = new URLSearchParams(searchParams?.toString());
-      current.set("therapy", value);
-      // Only keep therapy for now; if more server-side filters are added later, include them here.
-      router.push(`/products?${current.toString()}`);
-    }
-  }
+      // Clear page when filters change
+      delete params.page;
 
-  function handleSelectTherapy(value: string) {
-    setSelectedTherapy(value);
-    pushTherapyToUrl(value);
-  }
+      // Remove empty / "all" values
+      const clean = Object.fromEntries(
+        Object.entries(params).filter(([, v]) => v && v !== "all")
+      );
+      const qs = new URLSearchParams(clean).toString();
+      return `${pathname}${qs ? `?${qs}` : ""}`;
+    },
+    [activeCategory, activeForm, search, pathname]
+  );
 
-  function toggleForm(form: string) {
-    setSelectedForms((prev) => {
-      const next = new Set(prev);
-      next.has(form) ? next.delete(form) : next.add(form);
-      return next;
+  const navigate = (url: string) => {
+    startTransition(() => {
+      router.push(url);
     });
-  }
+  };
 
-  // Sync from URL on mount or when URL/initialTherapy changes
-  useEffect(() => {
-    const fromUrl = searchParams?.get("therapy") ?? undefined;
-    const next = (fromUrl ?? initialTherapy ?? "all");
-    setSelectedTherapy(next);
-  }, [searchParams, initialTherapy]);
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    navigate(buildUrl({ search }));
+  };
 
-  const filtered = useMemo(() => {
-    let list = products;
+  const handleCategory = (cat: string) => {
+    navigate(buildUrl({ category: cat }));
+  };
 
-    if (selectedTherapy !== "all") {
-      list = list.filter((p) => p.therapyAreaId === selectedTherapy);
-    }
+  const handleForm = (form: string) => {
+    navigate(buildUrl({ form }));
+  };
 
-    if (selectedForms.size > 0) {
-      list = list.filter((p) => selectedForms.has(p.dosageForm));
-    }
+  const clearAll = () => {
+    setSearch("");
+    navigate(pathname);
+  };
 
-    if (sort === "az") {
-      list = [...list].sort((a, b) => a.name.localeCompare(b.name));
-    } else {
-      list = [...list].sort((a, b) => a.therapyAreaId.localeCompare(b.therapyAreaId));
-    }
+  const hasFilters = activeCategory !== "all" || activeSearch || activeForm !== "all";
 
-    return list;
-  }, [products, selectedTherapy, selectedForms, sort]);
-
-  return (
-    <div className="flex flex-col md:flex-row gap-8">
-
-      {/* Sidebar */}
-      <aside className="w-full md:w-64 flex-shrink-0 space-y-8" aria-label="Product filters">
-        {/* Mobile toggle */}
+  const sidebar = (
+    <div className="space-y-6">
+      {/* Search */}
+      <form onSubmit={handleSearch}>
+        <label htmlFor="product-search" className="block text-xs font-bold uppercase tracking-widest text-slate-500 mb-2">
+          Search
+        </label>
+        <div className="relative">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
+          <input
+            id="product-search"
+            type="search"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            placeholder="Brand name or ingredient..."
+            className="w-full pl-9 pr-4 py-2.5 text-sm border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary bg-white"
+          />
+        </div>
         <button
-          className="md:hidden w-full flex items-center justify-between bg-white border border-slate-200 rounded-xl px-4 py-3 text-sm font-semibold text-slate-700 mb-4"
-          onClick={() => setShowFilters(!showFilters)}
-          aria-expanded={showFilters}
+          type="submit"
+          className="mt-2 w-full bg-primary text-primary-foreground text-sm font-semibold py-2 rounded-xl hover:bg-primary/90 transition-colors"
         >
-          <span className="flex items-center gap-2">
-            <SlidersHorizontal className="h-4 w-4" aria-hidden="true" />
-            Filters {(selectedTherapy !== "all" || selectedForms.size > 0) && `(${(selectedTherapy !== "all" ? 1 : 0) + selectedForms.size} active)`}
-          </span>
-          <ChevronDown className={`h-4 w-4 transition-transform ${showFilters ? "rotate-180" : ""}`} aria-hidden="true" />
+          Search
         </button>
+      </form>
 
-        <div className={showFilters ? "block" : "hidden md:block"}>
-
-          <div>
-            <h3 className="text-sm font-bold uppercase tracking-wider text-slate-900 mb-4">
-              Therapy Areas
-            </h3>
-            <ul className="space-y-2">
-              <li>
+      {/* Category filter */}
+      <div>
+        <div className="text-xs font-bold uppercase tracking-widest text-slate-500 mb-3">
+          Category
+        </div>
+        <ul className="space-y-1">
+          <li>
+            <button
+              onClick={() => handleCategory("all")}
+              className={`w-full flex items-center justify-between text-sm px-3 py-2 rounded-xl transition-colors ${
+                activeCategory === "all"
+                  ? "bg-primary text-primary-foreground font-bold"
+                  : "text-slate-700 hover:bg-slate-100 font-medium"
+              }`}
+            >
+              <span>All Categories</span>
+              <span className={`text-xs px-1.5 py-0.5 rounded-md font-bold ${activeCategory === "all" ? "bg-white/20" : "bg-slate-100 text-slate-500"}`}>
+                {categoryCounts.reduce((s, c) => s + c.count, 0)}
+              </span>
+            </button>
+          </li>
+          {categoryCounts.map((cat) => {
+            const isActive = activeCategory === cat.category;
+            const colors = CATEGORY_COLORS[cat.category] ?? CATEGORY_COLORS.miscellaneous;
+            return (
+              <li key={cat.category}>
                 <button
-                  onClick={() => handleSelectTherapy("all")}
-                  className={`text-sm font-medium w-full text-left py-1 transition-colors ${
-                    selectedTherapy === "all"
-                      ? "text-primary font-semibold"
-                      : "text-slate-600 hover:text-primary"
+                  onClick={() => handleCategory(cat.category)}
+                  className={`w-full flex items-center justify-between text-sm px-3 py-2 rounded-xl transition-colors ${
+                    isActive
+                      ? `${colors.bg} ${colors.text} font-bold`
+                      : "text-slate-600 hover:bg-slate-100 font-medium"
                   }`}
-                  aria-pressed={selectedTherapy === "all"}
                 >
-                  All Areas
+                  <span>{CATEGORY_LABELS[cat.category] ?? cat.category}</span>
+                  <span
+                    className={`text-xs px-1.5 py-0.5 rounded-md font-bold ${
+                      isActive ? colors.badge : "bg-slate-100 text-slate-500"
+                    }`}
+                  >
+                    {cat.count}
+                  </span>
                 </button>
               </li>
-              {therapyAreas.map((area) => (
-                <li key={area.id}>
-                  <button
-                    onClick={() => handleSelectTherapy(area.id)}
-                    className={`text-sm w-full text-left py-1 transition-colors ${
-                      selectedTherapy === area.id
-                        ? "text-primary font-semibold"
-                        : "text-slate-600 hover:text-primary"
-                    }`}
-                    aria-pressed={selectedTherapy === area.id}
-                  >
-                    {area.name}
-                  </button>
-                </li>
-              ))}
-            </ul>
-          </div>
+            );
+          })}
+        </ul>
+      </div>
 
-          <div>
-            <h3 className="text-sm font-bold uppercase tracking-wider text-slate-900 mb-4">
-              Dosage Forms
-            </h3>
-            <ul className="space-y-2">
-              {DOSAGE_FORMS.map((form) => (
-                <li key={form}>
-                  <label className="flex items-center space-x-2 text-sm text-slate-600 hover:text-slate-900 cursor-pointer">
-                    <input
-                      type="checkbox"
-                      checked={selectedForms.has(form)}
-                      onChange={() => toggleForm(form)}
-                      className="rounded border-slate-300 text-primary focus:ring-primary"
-                    />
-                    <span>{form}</span>
-                  </label>
-                </li>
-              ))}
-            </ul>
-          </div>
+      {/* Dosage form filter */}
+      <div>
+        <div className="text-xs font-bold uppercase tracking-widest text-slate-500 mb-3">
+          Dosage Form
+        </div>
+        <div className="flex flex-wrap gap-2">
+          {FORM_OPTIONS.map((opt) => {
+            const isActive = activeForm === opt.value;
+            return (
+              <button
+                key={opt.value}
+                onClick={() => handleForm(opt.value)}
+                className={`text-xs font-semibold px-3 py-1.5 rounded-full border transition-colors ${
+                  isActive
+                    ? "bg-slate-900 text-white border-slate-900"
+                    : "bg-white text-slate-600 border-slate-200 hover:border-slate-400"
+                }`}
+              >
+                {opt.label}
+              </button>
+            );
+          })}
+        </div>
+      </div>
 
-          {(selectedTherapy !== "all" || selectedForms.size > 0) && (
-            <button
-              onClick={() => {
-                handleSelectTherapy("all");
-                setSelectedForms(new Set());
-              }}
-              className="text-xs text-slate-400 hover:text-slate-700 underline transition-colors"
-            >
-              Clear all filters
-            </button>
+      {/* Clear filters */}
+      {hasFilters && (
+        <button
+          onClick={clearAll}
+          className="w-full flex items-center justify-center gap-2 text-sm text-slate-500 hover:text-rose-600 py-2 border border-dashed border-slate-200 rounded-xl transition-colors"
+        >
+          <X className="h-4 w-4" />
+          Clear all filters
+        </button>
+      )}
+
+      {/* Loading indicator */}
+      {isPending && (
+        <div className="text-xs text-center text-primary animate-pulse font-medium">
+          Loading products…
+        </div>
+      )}
+    </div>
+  );
+
+  return (
+    <>
+      {/* Mobile toggle */}
+      <div className="lg:hidden">
+        <button
+          onClick={() => setMobileOpen((o) => !o)}
+          className="flex items-center gap-2 text-sm font-semibold text-slate-700 border border-slate-200 bg-white rounded-xl px-4 py-2.5 w-full mb-4"
+        >
+          <SlidersHorizontal className="h-4 w-4" />
+          {mobileOpen ? "Hide Filters" : "Show Filters"}
+          {hasFilters && (
+            <span className="ml-auto bg-primary text-primary-foreground text-[10px] font-bold px-1.5 py-0.5 rounded-full">
+              Active
+            </span>
           )}
-        </div>
-      </aside>
-
-      {/* Product grid */}
-      <div className="flex-1">
-        <div className="mb-6 flex justify-between items-center text-sm text-slate-600">
-          <span>
-            Showing <strong>{filtered.length}</strong> of {products.length} products
-          </span>
-          <select
-            value={sort}
-            onChange={(e) => setSort(e.target.value as "az" | "therapy")}
-            className="border border-slate-200 rounded-md py-1.5 pl-3 pr-8 text-sm focus:ring-primary focus:border-primary bg-white"
-            aria-label="Sort products"
-          >
-            <option value="az">A–Z</option>
-            <option value="therapy">Therapy Area</option>
-          </select>
-        </div>
-
-        {filtered.length === 0 ? (
-          <div className="py-20 text-center text-slate-500">
-            <p className="text-lg font-medium mb-2">No products match your filters.</p>
-            <button
-              onClick={() => { setSelectedTherapy("all"); setSelectedForms(new Set()); }}
-              className="text-primary hover:underline text-sm"
-            >
-              Clear filters
-            </button>
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filtered.map((product) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
+        </button>
+        {mobileOpen && (
+          <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-5 mb-6">
+            {sidebar}
           </div>
         )}
       </div>
 
-    </div>
+      {/* Desktop sidebar */}
+      <div className="hidden lg:block bg-white rounded-2xl border border-slate-100 shadow-sm p-5 sticky top-24">
+        {sidebar}
+      </div>
+    </>
   );
 }

@@ -3,8 +3,7 @@ import { TrustSignalsStrip } from "@/components/blocks/trust-signals";
 import { AnimatedStats } from "@/components/blocks/animated-stats";
 import { WhyUs } from "@/components/blocks/why-us";
 import { Testimonials } from "@/components/blocks/testimonials";
-import { ProductCard } from "@/components/blocks/product-card";
-import { products } from "@/data/products";
+import { getFeaturedProducts, CATEGORY_LABELS, CATEGORY_COLORS } from "@/lib/supabase-products";
 import { therapyAreas } from "@/data/therapy-areas";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
@@ -124,8 +123,8 @@ const STATE_COLORS = [
   "bg-lime-100 text-lime-700",
 ];
 
-export default function Home() {
-  const featuredProducts = products.slice(0, 3);
+export default async function Home() {
+  const featuredProducts = await getFeaturedProducts(3);
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -319,10 +318,28 @@ export default function Home() {
             </Link>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {featuredProducts.map((product) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {featuredProducts.map((product) => {
+              const colors = CATEGORY_COLORS[product.category] ?? CATEGORY_COLORS.miscellaneous;
+              return (
+                <div
+                  key={product.id}
+                  className={`bg-white rounded-2xl border ${colors.border} p-6 flex flex-col space-y-3 shadow-sm hover:shadow-md transition-shadow`}
+                >
+                  <span className={`self-start text-[10px] font-bold px-2.5 py-1 rounded-full ${colors.badge}`}>
+                    {CATEGORY_LABELS[product.category] ?? product.category}
+                  </span>
+                  <div className="font-bold text-slate-900 text-lg leading-snug">{product.name}</div>
+                  <p className="text-slate-500 text-sm leading-relaxed flex-1">{product.composition}</p>
+                  <div className="pt-2 flex items-center justify-between border-t border-slate-100">
+                    <span className="text-xs font-semibold text-slate-400">{product.form}</span>
+                    <Link href={`/products?category=${product.category}`} className={`text-xs font-bold ${colors.text} hover:underline`}>
+                      View Range →
+                    </Link>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>

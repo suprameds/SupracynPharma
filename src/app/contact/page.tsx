@@ -34,8 +34,9 @@ export default function ContactPage() {
                       <h4 className="font-bold text-slate-900">Registered Address</h4>
                       <p className="text-slate-600 mt-1 leading-relaxed">
                         Supracyn Pharma,<br />
-                        Sanath Nagar,<br />
-                        Hyderabad, Telangana — 500018
+                        H. No: 7-1-277/113(242/C),<br />
+                        Near BK Guda Park, Balkampet,<br />
+                        Hyderabad — 500018
                       </p>
                     </div>
                   </div>
@@ -47,7 +48,13 @@ export default function ContactPage() {
                     <div>
                       <h4 className="font-bold text-slate-900">Phone</h4>
                       <p className="text-slate-600 mt-1 leading-relaxed">
-                        Please reach out via email or the contact form and we will call you back.
+                        <a href="tel:+919182027651" className="text-primary hover:underline font-medium">
+                          +91 91820 27651
+                        </a>
+                        <br />
+                        <a href="tel:+917032427651" className="text-primary hover:underline font-medium">
+                          +91 70324 27651
+                        </a>
                       </p>
                     </div>
                   </div>
@@ -59,14 +66,8 @@ export default function ContactPage() {
                     <div>
                       <h4 className="font-bold text-slate-900">Email</h4>
                       <p className="text-slate-600 mt-1 leading-relaxed">
-                        General Inquiries:{" "}
-                        <a href="mailto:info@supracynpharma.com" className="text-primary hover:underline">
-                          info@supracynpharma.com
-                        </a>
-                        <br />
-                        Partnerships:{" "}
-                        <a href="mailto:partners@supracynpharma.com" className="text-primary hover:underline">
-                          partners@supracynpharma.com
+                        <a href="mailto:supracyn@gmail.com" className="text-primary hover:underline">
+                          supracyn@gmail.com
                         </a>
                       </p>
                     </div>
