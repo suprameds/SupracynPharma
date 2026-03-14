@@ -135,6 +135,53 @@ export async function getFeaturedProducts(limit = 3): Promise<Product[]> {
   return (data ?? []) as Product[];
 }
 
+/** Fetch a single product by its numeric Supabase ID. */
+export async function getProductById(id: number): Promise<Product | null> {
+  const client = getClient();
+  if (!client) return null;
+
+  const { data, error } = await client
+    .from("products")
+    .select("*")
+    .eq("id", id)
+    .eq("is_active", true)
+    .single();
+
+  if (error) {
+    if (error.code !== "PGRST116") {
+      // PGRST116 = row not found — not an error worth logging
+      console.error("[supabase-products] getProductById error:", error.message);
+    }
+    return null;
+  }
+  return data as Product;
+}
+
+/** Fetch up to `limit` products from the same category, excluding the given id. */
+export async function getRelatedProducts(
+  category: string,
+  excludeId: number,
+  limit = 4
+): Promise<Product[]> {
+  const client = getClient();
+  if (!client) return [];
+
+  const { data, error } = await client
+    .from("products")
+    .select("*")
+    .eq("category", category)
+    .eq("is_active", true)
+    .neq("id", excludeId)
+    .order("name", { ascending: true })
+    .limit(limit);
+
+  if (error) {
+    console.error("[supabase-products] getRelatedProducts error:", error.message);
+    return [];
+  }
+  return (data ?? []) as Product[];
+}
+
 /** Return the product count per category for the filter sidebar. */
 export async function getCategoryCounts(): Promise<CategoryCount[]> {
   const client = getClient();

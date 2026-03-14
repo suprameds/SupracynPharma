@@ -1,17 +1,26 @@
 import type { MetadataRoute } from "next";
 import { blogPosts } from "@/data/blog-posts";
+import { getProducts } from "@/lib/supabase-products";
 
 const baseUrl = "https://supracynpharma.com";
 
 /**
  * XML sitemap served at /sitemap.xml.
  *
- * Products from Supabase are NOT given individual URLs here because the
- * /products/[id] pages only cover the legacy 5 static products.
- * The /products page with category filters is the canonical product destination.
+ * Individual product pages (/products/[id]) are fetched from Supabase so
+ * all 622 branded formulations are submitted to search engines.
  */
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date();
+
+  // Fetch all product IDs from Supabase for individual product pages
+  const { data: allProducts } = await getProducts({ limit: 700, page: 1 });
+  const productDetailPaths: MetadataRoute.Sitemap = allProducts.map((p) => ({
+    url: `${baseUrl}/products/${p.id}`,
+    lastModified: now,
+    changeFrequency: "monthly" as const,
+    priority: 0.65,
+  }));
 
   const staticPaths: MetadataRoute.Sitemap = [
     { url: `${baseUrl}/`, priority: 1.0, changeFrequency: "weekly" as const },
@@ -53,5 +62,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     lastModified: new Date(post.date),
   }));
 
-  return [...staticPaths, ...productCategoryPaths, ...blogPaths];
+  return [...staticPaths, ...productCategoryPaths, ...productDetailPaths, ...blogPaths];
 }

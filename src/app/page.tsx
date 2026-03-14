@@ -1,3 +1,6 @@
+// Revalidate featured products from Supabase every hour
+export const revalidate = 3600;
+
 import { Hero } from "@/components/blocks/hero";
 import { TrustSignalsStrip } from "@/components/blocks/trust-signals";
 import { AnimatedStats } from "@/components/blocks/animated-stats";
