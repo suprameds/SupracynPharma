@@ -1,18 +1,17 @@
 import { PageHeader } from "@/components/blocks/page-header";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import Image from "next/image";
-import { Factory, Truck, Microscope, ShieldCheck } from "lucide-react";
+import { Factory, Microscope, ShieldCheck, Truck, MapPin } from "lucide-react";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Manufacturing & Infrastructure | Supracyn Pharma",
+  title: "Manufacturing Network | Supracyn Pharma",
   description:
-    "Explore Supracyn Pharma's robust manufacturing capabilities, state-of-the-art facilities, and supply chain excellence.",
+    "Supracyn Pharma sources its branded formulations from a network of WHO-GMP certified pharmaceutical manufacturers across India.",
   openGraph: {
-    title: "Manufacturing & Infrastructure | Supracyn Pharma",
+    title: "Manufacturing Network | Supracyn Pharma",
     description:
-      "Explore Supracyn Pharma's robust manufacturing capabilities, state-of-the-art facilities, and supply chain excellence.",
+      "Supracyn Pharma sources its branded formulations from a network of WHO-GMP certified pharmaceutical manufacturers across India.",
     url: "https://supracynpharma.com/infrastructure",
   },
 };
@@ -20,103 +19,106 @@ export const metadata: Metadata = {
 export default function InfrastructurePage() {
   return (
     <div className="flex flex-col min-h-screen">
-      <PageHeader 
-        title="Manufacturing & Infrastructure" 
-        subtitle="Scalable, compliant, and technology-driven facilities built to power global healthcare."
-        breadcrumbs={[
-          { label: "Infrastructure" }
-        ]}
+      <PageHeader
+        title="Manufacturing Network"
+        subtitle="Supracyn products are backed by a vetted network of WHO-GMP certified manufacturing facilities spread across India."
+        breadcrumbs={[{ label: "Manufacturing Network" }]}
       />
 
       <section id="manufacturing" className="py-20 md:py-24 bg-white">
         <div className="container mx-auto px-4 md:px-8 max-w-6xl">
-          
+
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center mb-24">
             <div className="space-y-6">
-              <h2 className="text-3xl lg:text-4xl font-bold text-slate-900">State-of-the-Art Production Hubs</h2>
+              <h2 className="text-3xl lg:text-4xl font-bold text-slate-900">
+                Third-Party Licensed Manufacturing
+              </h2>
               <p className="text-lg text-slate-600 leading-relaxed">
-                Our manufacturing plants are designed in accordance with current Good Manufacturing Practices (cGMP). Segregated blocks ensure precise atmospheric control, eliminating cross-contamination risks across varied therapeutic formulations.
+                Supracyn Pharma markets its branded medicines through a carefully selected network of certified third-party manufacturers. Each facility is WHO-GMP compliant, regularly audited, and staffed by qualified pharmaceutical professionals — ensuring every Supracyn product meets the highest standards of purity, potency, and safety.
               </p>
+              <p className="text-slate-600 leading-relaxed">
+                Our manufacturing partners are based in leading pharma manufacturing hubs of India — including Himachal Pradesh, Uttarakhand, and Telangana — giving us access to diverse dosage form capabilities across solid orals, liquids, and nutritional supplements.
+              </p>
+
               <div className="pt-4 grid grid-cols-2 gap-6">
                 <div>
-                  <h4 className="font-bold text-4xl text-primary mb-1">1B+</h4>
-                  <span className="text-slate-500 font-medium text-sm uppercase tracking-wider">Tablets / Annum</span>
+                  <h4 className="font-bold text-4xl text-primary mb-1">4+</h4>
+                  <span className="text-slate-500 font-medium text-sm uppercase tracking-wider">Certified Partner Facilities</span>
                 </div>
                 <div>
-                  <h4 className="font-bold text-4xl text-accent mb-1">5L+</h4>
-                  <span className="text-slate-500 font-medium text-sm uppercase tracking-wider">Syrups / Month</span>
+                  <h4 className="font-bold text-4xl text-accent mb-1">500+</h4>
+                  <span className="text-slate-500 font-medium text-sm uppercase tracking-wider">Branded Formulations</span>
                 </div>
               </div>
             </div>
-            
+
+            {/* Map-style location cards */}
             <div className="grid grid-cols-2 gap-4">
-              <div className="bg-slate-100 aspect-[4/5] rounded-2xl overflow-hidden border relative shadow-md">
-                <Image
-                  src="/images/infrastructure/solid-dosage.png"
-                  alt="Solid dosage tablet compression line"
-                  fill
-                  className="object-cover"
-                />
-              </div>
-              <div className="space-y-4 pt-12">
-                <div className="bg-slate-100 aspect-square rounded-2xl overflow-hidden border relative shadow-md">
-                  <Image
-                    src="/images/infrastructure/liquid-line.png"
-                    alt="Liquid oral syrup filling line"
-                    fill
-                    className="object-cover"
-                  />
+              {[
+                { name: "Betamax Remedies", location: "Tahilwal, Himachal Pradesh", cert: "WHO-GMP, WHO-GLP" },
+                { name: "Theon Pharmaceuticals", location: "Solan, Himachal Pradesh", cert: "WHO, ISO, NABL" },
+                { name: "Health Biotech", location: "Himachal Pradesh", cert: "GMP Certified" },
+                { name: "Akums Drugs", location: "Haridwar, Uttarakhand", cert: "WHO-GMP, ISO" },
+              ].map((partner) => (
+                <div
+                  key={partner.name}
+                  className="bg-slate-50 rounded-2xl border border-slate-200 p-5 flex flex-col gap-2 hover:border-primary/20 hover:shadow-md transition-all"
+                >
+                  <div className="flex items-start gap-2">
+                    <MapPin className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" aria-hidden="true" />
+                    <div>
+                      <p className="text-sm font-bold text-slate-900 leading-tight">{partner.name}</p>
+                      <p className="text-xs text-slate-500 mt-0.5">{partner.location}</p>
+                    </div>
+                  </div>
+                  <span className="text-[10px] font-semibold text-green-700 bg-green-50 border border-green-200 px-2 py-0.5 rounded-full self-start">
+                    {partner.cert}
+                  </span>
                 </div>
-                <div className="aspect-square rounded-2xl overflow-hidden border relative shadow-md">
-                  <Image
-                    src="/images/infrastructure/packaging.png"
-                    alt="Automated blister packaging area"
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-              </div>
+              ))}
             </div>
           </div>
 
-          {/* Capabilities Grid — also serves as the R&D anchor for nav links */}
+          {/* Capabilities */}
           <div id="research" className="scroll-mt-20">
-          <h3 className="text-2xl font-bold text-center text-slate-900 mb-12">Our Core Capabilities</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {[
-              { icon: Factory, title: "Solid Orals", desc: "Tablets, capsules, and extended-release formulations manufactured with high-speed compression and coating lines." },
-              { icon: ShieldCheck, title: "Liquid Orals", desc: "Syrups and suspensions with rigorous homogenization and zero-defects filling protocols." },
-              { icon: Microscope, title: "Advanced R&D", desc: "Dedicated laboratory setup for formulation development, stability studies, and API validation." },
-              { icon: Truck, title: "Logistics Hub", desc: "Temperature-controlled warehousing ensuring product stability during storage and transit." }
-            ].map((cap, i) => {
-              const Icon = cap.icon;
-              return (
-                <div key={i} className="p-8 bg-slate-50 rounded-2xl border border-slate-100 hover:border-primary/30 transition-colors group">
-                  <div className="h-12 w-12 bg-white rounded-xl shadow-sm flex items-center justify-center text-primary mb-6 group-hover:bg-primary group-hover:text-white transition-colors">
-                    <Icon className="h-6 w-6" />
+            <h3 className="text-2xl font-bold text-center text-slate-900 mb-12">
+              What Our Partners Manufacture for Supracyn
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {[
+                { icon: Factory, title: "Solid Orals", desc: "Tablets and capsules across anti-infectives, cardiac, diabetology, and pain management therapy areas." },
+                { icon: ShieldCheck, title: "Liquid Orals", desc: "Syrups and suspensions, including paediatric formulations and vitamin/nutrition supplements." },
+                { icon: Microscope, title: "Nutraceuticals", desc: "Vitamins, mineral supplements, and health nutrition products under the Supracyn brand." },
+                { icon: Truck, title: "Gynaecology Range", desc: "Hormonal and reproductive health formulations manufactured to specialist pharma standards." },
+              ].map((cap) => {
+                const Icon = cap.icon;
+                return (
+                  <div key={cap.title} className="p-8 bg-slate-50 rounded-2xl border border-slate-100 hover:border-primary/30 transition-colors group">
+                    <div className="h-12 w-12 bg-white rounded-xl shadow-sm flex items-center justify-center text-primary mb-6 group-hover:bg-primary group-hover:text-white transition-colors">
+                      <Icon className="h-6 w-6" aria-hidden="true" />
+                    </div>
+                    <h4 className="text-lg font-bold text-slate-900 mb-3">{cap.title}</h4>
+                    <p className="text-sm text-slate-600 leading-relaxed">{cap.desc}</p>
                   </div>
-                  <h4 className="text-lg font-bold text-slate-900 mb-3">{cap.title}</h4>
-                  <p className="text-sm text-slate-600 leading-relaxed">{cap.desc}</p>
-                </div>
-              );
-            })}
+                );
+              })}
+            </div>
           </div>
-          </div>{/* end #research */}
 
         </div>
       </section>
 
       {/* CTA Section */}
       <section className="py-20 bg-slate-900 text-center relative overflow-hidden">
-        <div className="absolute inset-0 bg-[url('/images/pattern.svg')] opacity-5" />
+        <div className="absolute inset-0 bg-[url('/images/pattern.svg')] opacity-5" aria-hidden="true" />
         <div className="container mx-auto px-4 relative z-10 max-w-3xl">
-          <h2 className="text-3xl font-bold text-white mb-6">Utilize Our Infrastructure for Your Brand</h2>
+          <h2 className="text-3xl font-bold text-white mb-6">Interested in Distributing Supracyn?</h2>
           <p className="text-lg text-slate-300 mb-10 leading-relaxed">
-            Supracyn Pharma offers highly scalable Third-Party Manufacturing and Private Labeling services. Partner with us to bring your formulations to market efficiently.
+            Our branded portfolio is manufactured to the highest standards and ready for distribution across India and international markets. Contact us to explore partnership opportunities.
           </p>
-          <Link href="/partnerships#manufacturing">
+          <Link href="/partnerships">
             <Button size="lg" className="bg-primary hover:bg-primary/90 text-white border-none h-14 px-8 text-lg">
-              Inquire About Manufacturing
+              Become a Distribution Partner
             </Button>
           </Link>
         </div>

@@ -54,8 +54,8 @@ export function Footer() {
             </p>
             <div className="text-sm text-slate-400 space-y-1 pt-2">
               <p className="font-medium text-slate-300">Corporate Office</p>
-              <p>Supracyn House, Industrial Area,</p>
-              <p>New Delhi, India &mdash; 110020</p>
+              <p>Sanath Nagar,</p>
+              <p>Hyderabad, Telangana &mdash; 500018</p>
               <a href="mailto:info@supracynpharma.com" className="block mt-2 text-primary hover:text-primary/80 transition-colors font-medium">
                 info@supracynpharma.com
               </a>

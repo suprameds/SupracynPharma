@@ -18,11 +18,11 @@ export const mainNavigation: NavItem[] = [
     ],
   },
   {
-    label: "Infrastructure",
+    label: "Manufacturing",
     href: "/infrastructure",
     children: [
-      { label: "Manufacturing", href: "/infrastructure", description: "Solid and liquid dosage lines with 1B+ tablet capacity" },
-      { label: "R&D & Innovation", href: "/infrastructure", description: "Dedicated labs for formulation and stability studies" },
+      { label: "Partner Network", href: "/infrastructure", description: "Our WHO-GMP certified third-party manufacturing partners" },
+      { label: "Quality & Compliance", href: "/quality", description: "How we ensure every Supracyn product meets global standards" },
     ],
   },
   { label: "Partnerships", href: "/partnerships" },

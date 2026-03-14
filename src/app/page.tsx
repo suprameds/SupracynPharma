@@ -35,8 +35,8 @@ export default function Home() {
     <div className="flex flex-col min-h-screen">
       {/* 1. Hero Section */}
       <Hero
-        title="Quality Medicines. Trusted Brand. Global Reach."
-        subtitle="Supracyn is a pharmaceutical brand bringing safe, effective, and affordable healthcare solutions to patients and providers across 25+ markets."
+        title="Quality Medicines. The Supracyn Brand."
+        subtitle="Founded in Hyderabad, Supracyn Pharma markets safe, effective, and affordable branded medicines across India and internationally — trusted by doctors and patients alike."
       />
 
       {/* 2. Trust Signals */}

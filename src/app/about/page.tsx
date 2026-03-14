@@ -31,7 +31,7 @@ export default function AboutPage() {
               <div>
                 <h2 className="text-3xl font-bold text-slate-900 mb-4">Our Heritage</h2>
                 <p className="text-lg text-slate-600 leading-relaxed">
-                  Founded with a vision to make quality healthcare accessible, Supracyn Pharma has grown into a trusted pharmaceutical brand marketed across India and global markets. We build the Supracyn name on a simple promise — every product that carries our brand is safe, effective, and affordably priced.
+                  Supracyn Pharma was established in 2014 at Sanath Nagar, Hyderabad. We are a growing pharmaceutical marketing company that markets a wide range of quality medicines and nutritional supplements under the Supracyn brand name. Our products are sourced from WHO-GMP certified and reputed manufacturers operating under third-party licences across India.
                 </p>
               </div>
 
@@ -87,12 +87,12 @@ export default function AboutPage() {
             <div className="absolute left-6 top-0 bottom-0 w-px bg-slate-200 md:left-1/2" aria-hidden="true" />
             <ol className="space-y-10">
               {[
-                { year: "2001", title: "Brand Founded", desc: "Supracyn Pharma was established in New Delhi with a clear purpose — to build a pharmaceutical brand that doctors and patients could trust." },
-                { year: "2005", title: "First Product Range", desc: "Launched our first portfolio of Supracyn-branded formulations across anti-infectives and gastroenterology, gaining rapid traction with healthcare professionals." },
-                { year: "2010", title: "Pan-India Presence", desc: "Supracyn products reached pharmacies and hospitals across all major Indian states, establishing a strong national footprint." },
-                { year: "2014", title: "International Markets", desc: "Began marketing Supracyn-branded products in African and Middle Eastern markets, reaching 10+ countries." },
-                { year: "2019", title: "Portfolio Expansion", desc: "Expanded the Supracyn portfolio to 500+ branded formulations spanning 6 therapy areas including cardiology, neurology, and respiratory." },
-                { year: "2024", title: "25+ Countries", desc: "Supracyn is now a recognised pharmaceutical brand across 25+ markets, trusted by thousands of doctors and dispensed at hundreds of thousands of pharmacies." },
+                { year: "2014", title: "Company Founded", desc: "Supracyn Pharma was established at Sanath Nagar, Hyderabad — a pharmaceutical marketing company built around quality branded medicines at accessible prices." },
+                { year: "2015", title: "First Product Range", desc: "Launched our first range of Supracyn-branded formulations covering anti-infectives, pain management, and vitamins, partnering with WHO-GMP certified manufacturers." },
+                { year: "2017", title: "Expanded Therapy Portfolio", desc: "Extended the Supracyn brand across Cardiology, Diabetology, and Gynaecology, addressing some of the most prevalent healthcare needs in our market." },
+                { year: "2019", title: "Pan-India Reach", desc: "Supracyn products became available through pharmacies and hospital networks across major Indian states, building recognition among doctors and patients alike." },
+                { year: "2021", title: "International Expansion", desc: "Began extending the Supracyn brand into international markets across the Middle East, Africa, and South Asia." },
+                { year: "2024", title: "Growing Portfolio", desc: "Supracyn now markets 500+ formulations across 7 therapy areas, sourced from leading WHO-certified manufacturing partners across India." },
               ].map((item, i) => (
                 <li key={item.year} className={`relative flex gap-8 ${i % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"} md:w-1/2 ${i % 2 === 0 ? "md:ml-0 md:pr-12" : "md:ml-auto md:pl-12"}`}>
                   <div className="flex-shrink-0 w-12 h-12 rounded-full bg-primary text-white font-bold text-xs flex items-center justify-center shadow-md z-10">
