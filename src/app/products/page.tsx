@@ -1,14 +1,16 @@
 import { PageHeader } from "@/components/blocks/page-header";
 import { getProducts, getCategoryCounts, CATEGORY_LABELS, CATEGORY_COLORS } from "@/lib/supabase-products";
 import { ProductsFilter } from "@/components/blocks/products-filter";
+import { BreadcrumbJsonLd } from "@/components/seo/json-ld";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, Search } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Product Portfolio | Supracyn Pharma",
+  title: "Product Portfolio | Supracyn Pharma — 600+ Branded Formulations",
   description:
-    "Browse 600+ Supracyn-branded formulations across Cardiology, Diabetology, Neurology, Anti-Infectives, Gastroenterology and more.",
+    "Browse 600+ Supracyn-branded pharmaceutical formulations across Cardiology, Diabetology, Neurology, Anti-Infectives, Gastroenterology and more. All WHO-GMP certified. Available across India.",
+  alternates: { canonical: "https://supracynpharma.com/products" },
 };
 
 // Re-fetch on every request so filters work server-side
@@ -42,6 +44,15 @@ export default async function ProductsPage({
 
   return (
     <div className="flex flex-col min-h-screen bg-slate-50">
+      <BreadcrumbJsonLd
+        items={[
+          { name: "Home", url: "https://supracynpharma.com" },
+          { name: "Products", url: "https://supracynpharma.com/products" },
+          ...(category !== "all"
+            ? [{ name: CATEGORY_LABELS[category] ?? category, url: `https://supracynpharma.com/products?category=${category}` }]
+            : []),
+        ]}
+      />
       <PageHeader
         title="Product Portfolio"
         subtitle={`${total > 0 ? total.toLocaleString() : "600"}+ Supracyn-branded formulations across 11 therapy areas — all sourced from WHO-GMP certified partners.`}

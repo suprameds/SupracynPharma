@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { Calendar, User } from "lucide-react";
 import Image from "next/image";
+import { BreadcrumbJsonLd, ArticleJsonLd } from "@/components/seo/json-ld";
 
 export function generateMetadata({
   params,
@@ -57,8 +58,24 @@ export default async function BlogPostPage({
     notFound();
   }
 
+  const postUrl = `https://supracynpharma.com/insights/${post.slug}`;
+
   return (
     <div className="flex flex-col min-h-screen bg-white">
+      <BreadcrumbJsonLd
+        items={[
+          { name: "Home", url: "https://supracynpharma.com" },
+          { name: "Insights", url: "https://supracynpharma.com/insights" },
+          { name: post.title, url: postUrl },
+        ]}
+      />
+      <ArticleJsonLd
+        title={post.title}
+        description={post.excerpt}
+        url={postUrl}
+        imageUrl={post.imageUrl}
+        publishedDate={post.date}
+      />
       {/* Top bar - breadcrumb only, no h1 */}
       <div className="bg-white border-b border-slate-200">
         <div className="container mx-auto px-4 md:px-8 py-6">

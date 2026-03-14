@@ -3,6 +3,7 @@ import { PageHeader } from "@/components/blocks/page-header";
 export const metadata = {
   title: "Terms of Use | Supracyn Pharma",
   description: "Terms and conditions governing the use of the Supracyn Pharma website.",
+  robots: { index: false, follow: false },
 };
 
 const sections = [

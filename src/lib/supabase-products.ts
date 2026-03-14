@@ -1,4 +1,4 @@
-import { createClient } from "@supabase/supabase-js";
+import { supabaseServerClient } from "@/lib/supabase-server";
 
 // ---------------------------------------------------------------------------
 // Types
@@ -52,17 +52,13 @@ export interface CategoryCount {
 
 // ---------------------------------------------------------------------------
 // Client
-// Use a public anon key — products are public read; no auth needed on browser.
+// Products queries run exclusively in Server Components, so we reuse the
+// existing service-role client (SUPABASE_SERVICE_ROLE_KEY).
+// This is the key that is already configured on Vercel.
 // ---------------------------------------------------------------------------
 
-const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL ?? "";
-const SUPABASE_ANON_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? "";
-
 function getClient() {
-  if (!SUPABASE_URL || !SUPABASE_ANON_KEY) return null;
-  return createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
-    auth: { persistSession: false },
-  });
+  return supabaseServerClient;
 }
 
 // ---------------------------------------------------------------------------

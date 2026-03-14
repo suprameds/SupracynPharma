@@ -1,22 +1,30 @@
 import { PageHeader } from "@/components/blocks/page-header";
 import { TrustSignalsStrip } from "@/components/blocks/trust-signals";
+import { BreadcrumbJsonLd } from "@/components/seo/json-ld";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "About Us | Supracyn Pharma",
   description:
-    "Learn about Supracyn Pharma — the company behind the Supracyn brand of trusted, quality-assured pharmaceutical products marketed across India.",
+    "Learn about Supracyn Pharma — Hyderabad-based pharmaceutical brand-marketing company founded in 2014. Trusted by doctors at Apollo, KIMS, CARE and 50+ hospitals across Telangana and Andhra Pradesh.",
   openGraph: {
     title: "About Us | Supracyn Pharma",
     description:
-      "Learn about Supracyn Pharma — the company behind the Supracyn brand of trusted, quality-assured pharmaceutical products marketed across India.",
+      "Hyderabad-based pharmaceutical brand-marketing company. 600+ formulations, WHO-GMP sourced, serving doctors and hospitals across India since 2014.",
     url: "https://supracynpharma.com/about",
   },
+  alternates: { canonical: "https://supracynpharma.com/about" },
 };
 
 export default function AboutPage() {
   return (
     <div className="flex flex-col min-h-screen">
+      <BreadcrumbJsonLd
+        items={[
+          { name: "Home", url: "https://supracynpharma.com" },
+          { name: "About Us", url: "https://supracynpharma.com/about" },
+        ]}
+      />
       <PageHeader
         title="About Supracyn Pharma"
         subtitle="The company behind the Supracyn brand — bringing quality, branded medicines to patients and healthcare providers across India."

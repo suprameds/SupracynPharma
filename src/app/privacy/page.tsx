@@ -3,6 +3,7 @@ import { PageHeader } from "@/components/blocks/page-header";
 export const metadata = {
   title: "Privacy Policy | Supracyn Pharma",
   description: "How Supracyn Pharma collects, uses, and protects your personal information.",
+  robots: { index: false, follow: false },
 };
 
 const sections = [

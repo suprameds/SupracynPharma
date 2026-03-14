@@ -1,16 +1,24 @@
 import { PageHeader } from "@/components/blocks/page-header";
 import { InquiryForm } from "@/components/blocks/inquiry-form";
+import { BreadcrumbJsonLd } from "@/components/seo/json-ld";
 import { MapPin, Phone, Mail, Building } from "lucide-react";
 
 export const metadata = {
-  title: "Contact Us | Supracyn Pharma",
+  title: "Contact Us | Supracyn Pharma — Hyderabad",
   description:
-    "Get in touch with Supracyn Pharma, Hyderabad — for product inquiries, distribution partnerships, or general information.",
+    "Contact Supracyn Pharma in Hyderabad, Telangana. Phone: +91 91820 27651. Email: supracyn@gmail.com. Inquiries for distribution partnerships, product availability, and hospital supply.",
+  alternates: { canonical: "https://supracynpharma.com/contact" },
 };
 
 export default function ContactPage() {
   return (
     <div className="flex flex-col min-h-screen bg-slate-50">
+      <BreadcrumbJsonLd
+        items={[
+          { name: "Home", url: "https://supracynpharma.com" },
+          { name: "Contact Us", url: "https://supracynpharma.com/contact" },
+        ]}
+      />
       <PageHeader
         title="Contact Us"
         subtitle="We welcome inquiries from prospective distribution partners, healthcare professionals, and institutions across India."

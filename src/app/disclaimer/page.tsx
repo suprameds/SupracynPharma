@@ -4,6 +4,7 @@ import { AlertTriangle } from "lucide-react";
 export const metadata = {
   title: "Medical Disclaimer | Supracyn Pharma",
   description: "Important disclaimers regarding the pharmaceutical and medical information presented on the Supracyn Pharma website.",
+  robots: { index: false, follow: false },
 };
 
 const sections = [
