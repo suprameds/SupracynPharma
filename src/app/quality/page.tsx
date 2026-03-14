@@ -22,7 +22,7 @@ const PARTNERS = [
     website: "https://betamaxremedies.com",
     certifications: ["WHO-GMP", "WHO-GLP", "QRO Certified", "UKAF Approved"],
     description:
-      "A leading pharma manufacturer in HP with certifications from WHO and international quality bodies. Produces solid dosage and other formulations for the Supracyn portfolio.",
+      "A leading pharma manufacturer in HP with WHO-GMP, WHO-GLP, QRO, and UKAF certifications. Produces solid dosage and other formulations for the Supracyn portfolio.",
   },
   {
     name: "Theon Pharmaceuticals Ltd",

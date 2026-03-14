@@ -5,11 +5,11 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "About Us | Supracyn Pharma",
   description:
-    "Learn about Supracyn Pharma — the company behind the Supracyn brand of trusted, quality-assured pharmaceutical products marketed across 25+ countries.",
+    "Learn about Supracyn Pharma — the company behind the Supracyn brand of trusted, quality-assured pharmaceutical products marketed across India.",
   openGraph: {
     title: "About Us | Supracyn Pharma",
     description:
-      "Learn about Supracyn Pharma — the company behind the Supracyn brand of trusted, quality-assured pharmaceutical products marketed across 25+ countries.",
+      "Learn about Supracyn Pharma — the company behind the Supracyn brand of trusted, quality-assured pharmaceutical products marketed across India.",
     url: "https://supracynpharma.com/about",
   },
 };
@@ -19,7 +19,7 @@ export default function AboutPage() {
     <div className="flex flex-col min-h-screen">
       <PageHeader
         title="About Supracyn Pharma"
-        subtitle="The company behind the Supracyn brand — bringing quality, branded medicines to patients and healthcare providers across the world."
+        subtitle="The company behind the Supracyn brand — bringing quality, branded medicines to patients and healthcare providers across India."
         breadcrumbs={[{ label: "About Us" }]}
       />
 
@@ -39,7 +39,7 @@ export default function AboutPage() {
                 <div className="bg-slate-50 p-6 rounded-2xl border border-slate-100">
                   <h3 className="text-xl font-bold text-slate-900 mb-2">Our Mission</h3>
                   <p className="text-slate-600">
-                    To market safe, effective, and affordable branded pharmaceutical products that healthcare professionals trust and patients rely on — across India and internationally.
+                    To market safe, effective, and affordable branded pharmaceutical products that healthcare professionals trust and patients rely on — across India.
                   </p>
                 </div>
                 <div className="bg-primary/5 p-6 rounded-2xl border border-primary/10">
@@ -56,9 +56,9 @@ export default function AboutPage() {
                 <h2 className="text-3xl font-bold text-slate-900 mb-6">Core Values</h2>
                 <ul className="space-y-6">
                   {[
-                    { title: "Quality First", desc: "Every Supracyn-branded product meets international safety and efficacy standards — no compromise." },
+                    { title: "Quality First", desc: "Every Supracyn-branded product meets stringent safety and efficacy standards — no compromise." },
                     { title: "Integrity", desc: "Honest pricing, transparent sourcing, and ethical marketing guide everything we do." },
-                    { title: "Accessibility", desc: "We believe quality medicines should be affordable and available in every market we serve." },
+                    { title: "Accessibility", desc: "We believe quality medicines should be affordable and available to every patient across India." },
                     { title: "Partnership", desc: "We grow by building long-term, trust-based relationships with distributors, doctors, and institutions." }
                   ].map((value, i) => (
                     <li key={i} className="flex gap-4">
@@ -91,7 +91,7 @@ export default function AboutPage() {
                 { year: "2015", title: "First Product Range", desc: "Launched our first range of Supracyn-branded formulations covering anti-infectives, pain management, and vitamins, partnering with WHO-GMP certified manufacturers." },
                 { year: "2017", title: "Expanded Therapy Portfolio", desc: "Extended the Supracyn brand across Cardiology, Diabetology, and Gynaecology, addressing some of the most prevalent healthcare needs in our market." },
                 { year: "2019", title: "Pan-India Reach", desc: "Supracyn products became available through pharmacies and hospital networks across major Indian states, building recognition among doctors and patients alike." },
-                { year: "2021", title: "International Expansion", desc: "Began extending the Supracyn brand into international markets across the Middle East, Africa, and South Asia." },
+                { year: "2021", title: "Deeper Market Penetration", desc: "Strengthened distribution networks across Tier-2 and Tier-3 Indian cities, making Supracyn-branded products more accessible to patients nationwide." },
                 { year: "2024", title: "Growing Portfolio", desc: "Supracyn now markets 500+ formulations across 7 therapy areas, sourced from leading WHO-certified manufacturing partners across India." },
               ].map((item, i) => (
                 <li key={item.year} className={`relative flex gap-8 ${i % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"} md:w-1/2 ${i % 2 === 0 ? "md:ml-0 md:pr-12" : "md:ml-auto md:pl-12"}`}>

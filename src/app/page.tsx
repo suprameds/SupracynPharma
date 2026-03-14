@@ -36,32 +36,32 @@ export default function Home() {
       {/* 1. Hero Section */}
       <Hero
         title="Quality Medicines. The Supracyn Brand."
-        subtitle="Founded in Hyderabad, Supracyn Pharma markets safe, effective, and affordable branded medicines across India and internationally — trusted by doctors and patients alike."
+        subtitle="Founded in Hyderabad in 2014, Supracyn Pharma markets safe, effective, and affordable branded medicines across India — trusted by doctors and patients alike."
       />
 
       {/* 2. Trust Signals */}
       <TrustSignalsStrip />
 
-      {/* Trusted Globally strip */}
+      {/* Presence Across India strip */}
       <section className="py-10 bg-white border-b border-slate-100">
         <div className="container mx-auto px-4 md:px-8">
           <p className="text-center text-xs font-bold uppercase tracking-widest text-slate-400 mb-8">
-            Trusted Across Markets
+            Present Across India
           </p>
           <div className="flex flex-wrap justify-center items-center gap-x-10 gap-y-4">
             {[
-              { flag: "🇮🇳", country: "India" },
-              { flag: "🇦🇪", country: "UAE" },
-              { flag: "🇰🇪", country: "Kenya" },
-              { flag: "🇳🇬", country: "Nigeria" },
-              { flag: "🇵🇭", country: "Philippines" },
-              { flag: "🇧🇩", country: "Bangladesh" },
-              { flag: "🇹🇿", country: "Tanzania" },
-              { flag: "🇮🇶", country: "Iraq" },
-            ].map(({ flag, country }) => (
-              <div key={country} className="flex items-center gap-2 text-slate-500 font-medium text-sm">
+              { flag: "🏙️", region: "Telangana" },
+              { flag: "🏙️", region: "Andhra Pradesh" },
+              { flag: "🏙️", region: "Maharashtra" },
+              { flag: "🏙️", region: "Karnataka" },
+              { flag: "🏙️", region: "Tamil Nadu" },
+              { flag: "🏙️", region: "Delhi NCR" },
+              { flag: "🏙️", region: "Gujarat" },
+              { flag: "🏙️", region: "Rajasthan" },
+            ].map(({ flag, region }) => (
+              <div key={region} className="flex items-center gap-2 text-slate-500 font-medium text-sm">
                 <span className="text-xl" aria-hidden="true">{flag}</span>
-                {country}
+                {region}
               </div>
             ))}
           </div>
@@ -74,17 +74,17 @@ export default function Home() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div className="space-y-6">
               <h2 className="text-3xl md:text-4xl font-bold text-slate-900 tracking-tight">
-                The Supracyn Brand — Built on Quality and Reach
+                The Supracyn Brand — Built on Quality and Trust
               </h2>
               <p className="text-lg text-slate-600 leading-relaxed">
-                Supracyn Pharma markets a comprehensive range of branded pharmaceutical products across India and international markets. Our products — each carrying the Supracyn name — are sourced from WHO-GMP certified facilities and meet stringent global safety and efficacy standards.
+                Supracyn Pharma markets a comprehensive range of branded pharmaceutical products across India. Our products — each carrying the Supracyn name — are sourced from WHO-GMP certified partner facilities and meet stringent safety and efficacy standards.
               </p>
               <ul className="space-y-3 pt-4">
                 {[
-                  "Branded formulations across 6 therapy areas",
+                  "Branded formulations across 7 therapy areas",
                   "Products sourced from WHO-GMP certified facilities",
                   "Trusted by doctors, hospitals, and pharmacies",
-                  "Distributed across 25+ countries"
+                  "Available across major states pan-India"
                 ].map((item, i) => (
                   <li key={i} className="flex items-center text-slate-700">
                     <CheckCircle2 className="h-5 w-5 text-primary mr-3 flex-shrink-0" />
@@ -189,7 +189,7 @@ export default function Home() {
                 Bring Supracyn to Your Market
               </h2>
               <p className="text-lg text-slate-300 leading-relaxed">
-                We are actively looking for distribution and institutional partners to carry Supracyn-branded products in their markets. If you are a distributor, pharmacy chain, or hospital network looking for a quality pharmaceutical brand, let&apos;s talk.
+                We are actively looking for distribution and institutional partners to carry Supracyn-branded products across India. If you are a distributor, pharmacy chain, or hospital network looking for a quality pharmaceutical brand, let&apos;s talk.
               </p>
               
               <div className="grid grid-cols-2 gap-6 pt-4">
@@ -198,8 +198,8 @@ export default function Home() {
                   <div className="text-sm text-slate-400 font-medium">Approved Formulations</div>
                 </div>
                 <div>
-                  <div className="text-4xl font-bold text-primary mb-2">25+</div>
-                  <div className="text-sm text-slate-400 font-medium">Export Countries</div>
+                  <div className="text-4xl font-bold text-primary mb-2">7+</div>
+                  <div className="text-sm text-slate-400 font-medium">Therapy Areas</div>
                 </div>
               </div>
 

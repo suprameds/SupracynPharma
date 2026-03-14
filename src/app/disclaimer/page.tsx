@@ -17,7 +17,7 @@ const sections = [
   },
   {
     title: "Regulatory Compliance by Jurisdiction",
-    body: `The products described on this website may not be approved, licensed, or registered in all countries. Availability, indications, contraindications, and dosage recommendations may differ by jurisdiction. Always refer to the locally approved prescribing information and comply with the regulations of your country.`,
+    body: `The products described on this website are marketed within India and are approved under applicable Indian regulations. Availability, indications, contraindications, and dosage recommendations are governed by the Drugs and Cosmetics Act, 1940 and CDSCO guidelines. Always refer to the locally approved prescribing information.`,
   },
   {
     title: "No Warranty on Accuracy",

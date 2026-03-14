@@ -15,21 +15,21 @@ export const trustSignals: TrustSignal[] = [
     iconName: "ShieldCheck",
   },
   {
-    id: "global-reach",
-    title: "Present in 25+ Markets",
-    description: "Supracyn products are available across India, Africa, the Middle East, and Southeast Asia.",
-    iconName: "Globe",
+    id: "pan-india",
+    title: "Pan-India Presence",
+    description: "Supracyn products are available through pharmacies and hospital networks across major Indian states.",
+    iconName: "MapPin",
   },
   {
     id: "portfolio",
     title: "500+ Formulations",
-    description: "A broad portfolio of Supracyn-branded medicines spanning 6 critical therapy areas.",
+    description: "A broad portfolio of Supracyn-branded medicines spanning 7 critical therapy areas.",
     iconName: "Factory",
   },
   {
     id: "doctors-trust",
     title: "Trusted by Doctors",
-    description: "Supracyn formulations are recommended by healthcare professionals and institutions across markets.",
+    description: "Supracyn formulations are recommended by healthcare professionals and institutions across India.",
     iconName: "Award",
   }
 ];

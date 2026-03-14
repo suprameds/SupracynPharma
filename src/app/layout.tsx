@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     template: "%s | Supracyn Pharma",
   },
   description:
-    "Supracyn Pharma is a trusted pharmaceutical brand marketing quality, doctor-recommended medicines across India and 25+ international markets. Explore our product portfolio, therapy areas, and distribution partnerships.",
+    "Supracyn Pharma is a trusted pharmaceutical brand marketing quality, doctor-recommended medicines across India. Explore our product portfolio, therapy areas, and distribution partnerships.",
   keywords: [
     "Supracyn",
     "pharmaceutical brand India",
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     siteName: "Supracyn Pharma",
     title: "Supracyn Pharma | Trusted Pharmaceutical Brand",
     description:
-      "Supracyn — quality branded medicines trusted by doctors across 25+ countries. 500+ formulations. 6 therapy areas.",
+      "Supracyn — quality branded medicines trusted by doctors across India. 500+ formulations. 7 therapy areas.",
     images: [
       {
         url: "/images/hero_corporate.png",
@@ -47,7 +47,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Supracyn Pharma | Trusted Pharmaceutical Brand",
     description:
-      "Supracyn — quality branded medicines trusted by doctors across 25+ countries. 500+ formulations. 6 therapy areas.",
+      "Supracyn — quality branded medicines trusted by doctors across India. 500+ formulations. 7 therapy areas.",
     images: ["/images/hero_corporate.png"],
   },
   icons: {

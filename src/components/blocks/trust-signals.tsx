@@ -1,10 +1,10 @@
 import { trustSignals } from "@/data/trust-signals";
-import { ShieldCheck, Globe, Factory, Award, Building2 } from "lucide-react";
+import { ShieldCheck, MapPin, Factory, Award, Building2 } from "lucide-react";
 
 // Helper to map string icon names to actual Lucide components
 const IconMap: Record<string, React.ElementType> = {
   ShieldCheck,
-  Globe,
+  MapPin,
   Factory,
   Award,
   Building2,

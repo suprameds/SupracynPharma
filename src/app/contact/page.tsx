@@ -13,7 +13,7 @@ export default function ContactPage() {
     <div className="flex flex-col min-h-screen bg-slate-50">
       <PageHeader
         title="Contact Us"
-        subtitle="We welcome inquiries from prospective distribution partners, healthcare professionals, and institutions across India and internationally."
+        subtitle="We welcome inquiries from prospective distribution partners, healthcare professionals, and institutions across India."
         breadcrumbs={[{ label: "Contact Us" }]}
       />
 

@@ -50,7 +50,7 @@ export function Footer() {
               <span className="font-bold text-lg tracking-tight text-white">Supracyn Pharma</span>
             </Link>
             <p className="text-slate-400 text-sm leading-relaxed max-w-xs">
-              Supracyn is a trusted pharmaceutical brand marketing quality, doctor-recommended medicines across India and 25+ international markets.
+              Supracyn is a trusted pharmaceutical brand marketing quality, doctor-recommended medicines across India.
             </p>
             <div className="text-sm text-slate-400 space-y-1 pt-2">
               <p className="font-medium text-slate-300">Corporate Office</p>

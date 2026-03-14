@@ -114,7 +114,7 @@ export default function InfrastructurePage() {
         <div className="container mx-auto px-4 relative z-10 max-w-3xl">
           <h2 className="text-3xl font-bold text-white mb-6">Interested in Distributing Supracyn?</h2>
           <p className="text-lg text-slate-300 mb-10 leading-relaxed">
-            Our branded portfolio is manufactured to the highest standards and ready for distribution across India and international markets. Contact us to explore partnership opportunities.
+            Our branded portfolio is manufactured to the highest standards and ready for distribution across India. Contact us to explore partnership opportunities.
           </p>
           <Link href="/partnerships">
             <Button size="lg" className="bg-primary hover:bg-primary/90 text-white border-none h-14 px-8 text-lg">

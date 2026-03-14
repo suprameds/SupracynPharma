@@ -63,8 +63,8 @@ const values = [
     desc: "Cross-functional teams with open communication and a flat enough structure for your ideas to be heard.",
   },
   {
-    title: "Global Exposure",
-    desc: "With exports to 25+ countries, you get broad exposure to international regulatory and market standards.",
+    title: "Pan-India Exposure",
+    desc: "Working across multiple Indian states and therapeutic segments gives you broad regulatory, clinical, and market experience.",
   },
 ];
 
@@ -73,7 +73,7 @@ export default function CareersPage() {
     <div className="flex flex-col min-h-screen">
       <PageHeader
         title="Join Our Team"
-        subtitle="Build a career that makes a difference in global healthcare."
+        subtitle="Build a career that makes a difference in Indian healthcare."
         breadcrumbs={[{ label: "Careers" }]}
       />
 
@@ -82,7 +82,7 @@ export default function CareersPage() {
         <div className="container mx-auto px-4 md:px-8 max-w-5xl">
           <h2 className="text-3xl font-bold text-slate-900 mb-2">Why Supracyn Pharma?</h2>
           <p className="text-slate-600 mb-10 max-w-2xl">
-            We are a WHO-GMP certified manufacturer with a growing international footprint. If you are passionate about pharmaceutical excellence, we want to hear from you.
+            We are a growing pharmaceutical marketing brand with a strong pan-India presence. If you are passionate about pharmaceutical excellence, we want to hear from you.
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             {values.map((v) => (

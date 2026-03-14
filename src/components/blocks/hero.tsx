@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, ShieldCheck, Globe, Award } from "lucide-react";
+import { ArrowRight, ShieldCheck, Award, MapPin } from "lucide-react";
 
 interface HeroProps {
   title: string;
@@ -19,7 +19,7 @@ interface HeroProps {
 const STATS = [
   { icon: ShieldCheck, label: "WHO-GMP Certified" },
   { icon: Award, label: "500+ Formulations" },
-  { icon: Globe, label: "25+ Countries" },
+  { icon: MapPin, label: "Pan-India Presence" },
 ];
 
 export function Hero({
@@ -123,9 +123,9 @@ export function Hero({
                 className="absolute -bottom-6 -left-8 bg-white rounded-2xl shadow-xl border border-slate-100 p-4 flex gap-6"
               >
                 {[
-                  { value: "1B+", label: "Tablets / Year" },
-                  { value: "25+", label: "Countries" },
                   { value: "500+", label: "Formulations" },
+                  { value: "7+", label: "Therapy Areas" },
+                  { value: "2014", label: "Est. Hyderabad" },
                 ].map((stat) => (
                   <div key={stat.label} className="text-center">
                     <div className="text-xl font-bold text-primary">{stat.value}</div>
