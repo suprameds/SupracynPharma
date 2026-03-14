@@ -65,6 +65,7 @@ export const metadata: Metadata = {
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { ScrollToTop } from "@/components/ui/scroll-to-top";
+import { WhatsAppButton } from "@/components/blocks/whatsapp-button";
 
 export default function RootLayout({
   children,
@@ -80,6 +81,7 @@ export default function RootLayout({
         </main>
         <Footer />
         <ScrollToTop />
+        <WhatsAppButton />
       </body>
     </html>
   );
