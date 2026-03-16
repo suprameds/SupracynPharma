@@ -28,7 +28,10 @@ export function Footer() {
                 </Button>
               </Link>
               <Link href="/contact">
-                <Button size="lg" variant="outline" className="border-slate-700 text-slate-200 hover:bg-slate-800 hover:text-white gap-2">
+                <Button
+                  size="lg"
+                  className="bg-white text-slate-900 hover:bg-slate-100 gap-2 border-none shadow-md shadow-slate-900/30"
+                >
                   <Mail className="h-4 w-4" aria-hidden="true" />
                   Contact Us
                 </Button>
