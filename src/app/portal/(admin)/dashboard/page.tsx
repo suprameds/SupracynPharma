@@ -44,8 +44,9 @@ async function getCounts(): Promise<{
 }
 
 type InquiryRow = {
-  id: number;
-  name: string;
+  id: string;
+  first_name: string;
+  last_name: string;
   email: string;
   created_at: string;
 };
@@ -54,7 +55,7 @@ async function getRecentInquiries(): Promise<InquiryRow[]> {
   if (!supabaseServerClient) return [];
   const { data } = await supabaseServerClient
     .from("inquiries")
-    .select("id,name,email,created_at")
+    .select("id,first_name,last_name,email,created_at")
     .order("created_at", { ascending: false })
     .limit(5);
   return data ?? [];
@@ -122,7 +123,9 @@ export default async function DashboardPage() {
             <tbody className="divide-y divide-slate-100 bg-white">
               {recent.map((inq) => (
                 <tr key={inq.id}>
-                  <td className="px-4 py-2">{inq.name}</td>
+                  <td className="px-4 py-2">
+                    {inq.first_name} {inq.last_name}
+                  </td>
                   <td className="px-4 py-2">{inq.email}</td>
                   <td className="px-4 py-2">
                     {new Date(inq.created_at).toLocaleString()}
