@@ -84,14 +84,43 @@ export async function getProducts(
 
   const { category, search, form, limit = PAGE_SIZE, page = 1 } = opts;
   const from = (page - 1) * limit;
-  const to = from + limit - 1;
 
+  // Use full-text search RPC when searching and no form filter (RPC doesn't support form)
+  const useFts = search?.trim() && (!form || form === "all");
+  if (useFts) {
+    const { data: rows, error } = await client.rpc("search_products", {
+      search_query: search!.trim(),
+      filter_category: category && category !== "all" ? category : null,
+      filter_active_only: true,
+      result_limit: limit,
+      result_offset: from,
+    });
+    if (error) {
+      console.error("[supabase-products] search_products RPC error:", error.message);
+      return { data: [], total: 0 };
+    }
+    const items = (rows ?? []) as Array<Record<string, unknown>>;
+    const total = (items[0]?.total_count as number) ?? 0;
+    const data = items.map((r) => ({
+      id: r.id,
+      name: r.name,
+      composition: r.composition ?? "",
+      category: r.category,
+      form: r.form,
+      is_featured: r.is_featured ?? false,
+      is_active: r.is_active ?? true,
+      created_at: r.created_at,
+    })) as Product[];
+    return { data, total };
+  }
+
+  // Standard query (no search, or search + form filter)
   let query = client
     .from("products")
     .select("*", { count: "exact" })
     .eq("is_active", true)
     .order("name", { ascending: true })
-    .range(from, to);
+    .range(from, from + limit - 1);
 
   if (category && category !== "all") {
     query = query.eq("category", category);
@@ -100,11 +129,9 @@ export async function getProducts(
     query = query.eq("form", form);
   }
   if (search && search.trim()) {
-    // Full-text search on the indexed tsvector column (simple dictionary)
-    query = query.textSearch("name", search.trim(), {
-      type: "websearch",
-      config: "simple",
-    });
+    const escaped = search.trim().replace(/'/g, "''");
+    const pattern = `'%${escaped}%'`;
+    query = query.or(`name.ilike.${pattern},composition.ilike.${pattern}`);
   }
 
   const { data, count, error } = await query;
@@ -205,6 +232,23 @@ export async function getCategoryCounts(): Promise<CategoryCount[]> {
       .sort((a, b) => b.count - a.count);
   }
   return data ?? [];
+}
+
+/** Return the total active product count for homepage stats. */
+export async function getTotalProductCount(): Promise<number> {
+  const client = getClient();
+  if (!client) return 622;
+
+  const { count, error } = await client
+    .from("products")
+    .select("*", { count: "exact", head: true })
+    .eq("is_active", true);
+
+  if (error) {
+    console.error("[supabase-products] getTotalProductCount error:", error.message);
+    return 622;
+  }
+  return count ?? 622;
 }
 
 /** Human-readable labels for each category slug. */

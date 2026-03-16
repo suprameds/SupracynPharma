@@ -1,17 +1,23 @@
-import { blogPosts } from "@/data/blog-posts";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { Calendar, User } from "lucide-react";
 import Image from "next/image";
 import { BreadcrumbJsonLd, ArticleJsonLd } from "@/components/seo/json-ld";
+import {
+  getAllBlogSlugs,
+  getBlogPostBySlug,
+  getBlogPosts,
+} from "@/lib/supabase-blogs";
 
-export function generateMetadata({
+export const revalidate = 3600;
+
+export async function generateMetadata({
   params,
 }: {
   params: { slug: string };
-}): Metadata {
-  const post = blogPosts.find((p) => p.slug === params.slug);
+}): Promise<Metadata> {
+  const post = await getBlogPostBySlug(params.slug);
   const title = post?.title
     ? `${post.title} | Supracyn Pharma`
     : "Insights | Supracyn Pharma";
@@ -30,8 +36,8 @@ export function generateMetadata({
       title,
       description,
       type: "article",
-      publishedTime: post?.date,
-      images: post?.imageUrl ? [{ url: post.imageUrl }] : undefined,
+      publishedTime: post?.published_at ?? undefined,
+      images: post?.image_url ? [{ url: post.image_url }] : undefined,
     },
     twitter: {
       card: "summary_large_image",
@@ -41,10 +47,9 @@ export function generateMetadata({
   };
 }
 
-export function generateStaticParams() {
-  return blogPosts.map((post) => ({
-    slug: post.slug,
-  }));
+export async function generateStaticParams() {
+  const slugs = await getAllBlogSlugs();
+  return slugs.map((row) => ({ slug: row.slug }));
 }
 
 export default async function BlogPostPage({
@@ -52,13 +57,14 @@ export default async function BlogPostPage({
 }: {
   params: { slug: string };
 }) {
-  const post = blogPosts.find((p) => p.slug === params.slug);
+  const post = await getBlogPostBySlug(params.slug);
 
   if (!post) {
     notFound();
   }
 
   const postUrl = `https://supracynpharma.com/insights/${post.slug}`;
+  const morePosts = (await getBlogPosts()).filter((p) => p.slug !== post.slug).slice(0, 2);
 
   return (
     <div className="flex flex-col min-h-screen bg-white">
@@ -73,8 +79,8 @@ export default async function BlogPostPage({
         title={post.title}
         description={post.excerpt}
         url={postUrl}
-        imageUrl={post.imageUrl}
-        publishedDate={post.date}
+        imageUrl={post.image_url}
+        publishedDate={post.published_at ?? post.created_at}
       />
       {/* Top bar - breadcrumb only, no h1 */}
       <div className="bg-white border-b border-slate-200">
@@ -112,14 +118,14 @@ export default async function BlogPostPage({
               {post.title}
             </h1>
             <div className="flex items-center justify-center space-x-6 text-sm text-slate-500 font-medium">
-              <span className="flex items-center"><Calendar className="h-4 w-4 mr-2" /> {new Date(post.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</span>
+              <span className="flex items-center"><Calendar className="h-4 w-4 mr-2" /> {new Date(post.published_at ?? post.created_at).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</span>
               <span className="flex items-center"><User className="h-4 w-4 mr-2" /> {post.author}</span>
             </div>
           </header>
 
           <div className="aspect-[21/9] w-full bg-slate-100 rounded-3xl overflow-hidden mb-12 relative shadow-lg">
             <Image
-              src={post.imageUrl}
+              src={post.image_url}
               alt={post.title}
               fill
               className="object-cover"
@@ -153,10 +159,7 @@ export default async function BlogPostPage({
               </Link>
             </div>
             <div className="flex flex-col sm:flex-row gap-6">
-              {blogPosts
-                .filter((p) => p.slug !== post.slug)
-                .slice(0, 2)
-                .map((p) => (
+              {morePosts.map((p) => (
                   <Link
                     key={p.id}
                     href={`/insights/${p.slug}`}
@@ -164,7 +167,7 @@ export default async function BlogPostPage({
                   >
                     <div className="relative w-24 h-24 flex-shrink-0 overflow-hidden rounded-lg bg-slate-100">
                       <Image
-                        src={p.imageUrl}
+                        src={p.image_url}
                         alt={p.title}
                         fill
                         className="object-cover group-hover:scale-105 transition-transform duration-300"
@@ -178,7 +181,7 @@ export default async function BlogPostPage({
                         {p.excerpt}
                       </p>
                       <p className="text-xs text-slate-400 mt-2">
-                        {new Date(p.date).toLocaleDateString("en-US", {
+                        {new Date(p.published_at ?? p.created_at).toLocaleDateString("en-US", {
                           month: "short",
                           day: "numeric",
                           year: "numeric",

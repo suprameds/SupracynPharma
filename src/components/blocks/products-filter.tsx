@@ -1,9 +1,14 @@
 "use client";
 
 import { useRouter, usePathname } from "next/navigation";
-import { useTransition, useState, useCallback } from "react";
+import { useTransition, useState, useCallback, useEffect, useRef } from "react";
 import { Search, SlidersHorizontal, X } from "lucide-react";
 import { CATEGORY_LABELS, CATEGORY_COLORS, type CategoryCount } from "@/lib/supabase-products";
+import type { Product } from "@/lib/supabase-products";
+
+const SUGGEST_DEBOUNCE_MS = 300;
+const MIN_QUERY_LENGTH = 2;
+const MAX_SUGGESTIONS = 8;
 
 const FORM_OPTIONS = [
   { value: "all", label: "All Forms" },
@@ -37,6 +42,52 @@ export function ProductsFilter({
   const [isPending, startTransition] = useTransition();
   const [search, setSearch] = useState(activeSearch);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [suggestions, setSuggestions] = useState<Product[]>([]);
+  const [suggestLoading, setSuggestLoading] = useState(false);
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const [highlightedIndex, setHighlightedIndex] = useState(-1);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  const abortRef = useRef<AbortController | null>(null);
+
+  // Debounced fetch of search suggestions
+  useEffect(() => {
+    const q = search.trim();
+    if (q.length < MIN_QUERY_LENGTH) {
+      setSuggestions([]);
+      setShowSuggestions(false);
+      return;
+    }
+
+    const t = setTimeout(async () => {
+      abortRef.current?.abort();
+      abortRef.current = new AbortController();
+      setSuggestLoading(true);
+      setShowSuggestions(true);
+      setHighlightedIndex(-1);
+
+      try {
+        const params = new URLSearchParams({ q });
+        if (activeCategory && activeCategory !== "all") params.set("category", activeCategory);
+        if (activeForm && activeForm !== "all") params.set("form", activeForm);
+        const res = await fetch(`/api/products/suggest?${params}`, {
+          signal: abortRef.current.signal,
+        });
+        if (!res.ok) {
+          setSuggestions([]);
+          return;
+        }
+        const json = (await res.json()) as { products?: Product[] };
+        setSuggestions(json.products ?? []);
+      } catch (err) {
+        if ((err as Error).name !== "AbortError") setSuggestions([]);
+      } finally {
+        setSuggestLoading(false);
+      }
+    }, SUGGEST_DEBOUNCE_MS);
+
+    return () => clearTimeout(t);
+  }, [search, activeCategory, activeForm]);
 
   const buildUrl = useCallback(
     (overrides: Record<string, string>) => {
@@ -59,10 +110,52 @@ export function ProductsFilter({
     [activeCategory, activeForm, search, pathname]
   );
 
-  const navigate = (url: string) => {
-    startTransition(() => {
-      router.push(url);
-    });
+  const navigate = useCallback(
+    (url: string) => {
+      startTransition(() => router.push(url));
+    },
+    [router]
+  );
+
+  const selectSuggestion = useCallback(
+    (product: Product) => {
+      setSearch(product.name);
+      setShowSuggestions(false);
+      setSuggestions([]);
+      navigate(buildUrl({ search: product.name }));
+      inputRef.current?.blur();
+    },
+    [buildUrl, navigate]
+  );
+
+  const handleInputKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (!showSuggestions || suggestions.length === 0) return;
+    switch (e.key) {
+      case "ArrowDown":
+        e.preventDefault();
+        setHighlightedIndex((i) => (i < suggestions.length - 1 ? i + 1 : 0));
+        break;
+      case "ArrowUp":
+        e.preventDefault();
+        setHighlightedIndex((i) => (i > 0 ? i - 1 : suggestions.length - 1));
+        break;
+      case "Enter":
+        if (highlightedIndex >= 0 && suggestions[highlightedIndex]) {
+          e.preventDefault();
+          selectSuggestion(suggestions[highlightedIndex]);
+        }
+        break;
+      case "Escape":
+        setShowSuggestions(false);
+        setHighlightedIndex(-1);
+        inputRef.current?.blur();
+        break;
+    }
+  };
+
+  const handleInputBlur = () => {
+    // Delay so click on suggestion registers
+    setTimeout(() => setShowSuggestions(false), 150);
   };
 
   const handleSearch = (e: React.FormEvent) => {
@@ -92,16 +185,61 @@ export function ProductsFilter({
         <label htmlFor="product-search" className="block text-xs font-bold uppercase tracking-widest text-slate-500 mb-2">
           Search
         </label>
-        <div className="relative">
+        <div className="relative" ref={dropdownRef}>
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
           <input
+            ref={inputRef}
             id="product-search"
             type="search"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
+            onKeyDown={handleInputKeyDown}
+            onFocus={() => suggestions.length > 0 && setShowSuggestions(true)}
+            onBlur={handleInputBlur}
             placeholder="Brand name or ingredient..."
+            autoComplete="off"
+            aria-label="Search products by brand name or ingredient"
+            aria-autocomplete="list"
+            aria-controls="product-suggestions"
+            aria-expanded={showSuggestions && suggestions.length > 0}
             className="w-full pl-9 pr-4 py-2.5 text-sm border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary bg-white"
           />
+          {showSuggestions && (
+            <div
+              id="product-suggestions"
+              role="listbox"
+              className="absolute left-0 right-0 top-full mt-1 z-50 bg-white border border-slate-200 rounded-xl shadow-lg overflow-hidden"
+            >
+              {suggestLoading ? (
+                <div className="px-4 py-3 text-sm text-slate-500">Searching…</div>
+              ) : suggestions.length === 0 ? (
+                <div className="px-4 py-3 text-sm text-slate-500">No matches</div>
+              ) : (
+                suggestions.map((product, i) => {
+                  const colors = CATEGORY_COLORS[product.category] ?? CATEGORY_COLORS.miscellaneous;
+                  return (
+                    <button
+                      key={product.id}
+                      role="option"
+                      aria-selected={i === highlightedIndex}
+                      type="button"
+                      onClick={() => selectSuggestion(product)}
+                      onMouseEnter={() => setHighlightedIndex(i)}
+                      className={`w-full text-left px-4 py-2.5 flex flex-col gap-0.5 transition-colors ${
+                        i === highlightedIndex ? "bg-primary/10" : "hover:bg-slate-50"
+                      }`}
+                    >
+                      <span className="font-semibold text-slate-900 text-sm">{product.name}</span>
+                      <span className="text-xs text-slate-500 line-clamp-1">{product.composition}</span>
+                      <span className={`inline-flex w-fit text-[10px] font-bold px-1.5 py-0.5 rounded mt-0.5 ${colors.badge}`}>
+                        {CATEGORY_LABELS[product.category] ?? product.category}
+                      </span>
+                    </button>
+                  );
+                })
+              )}
+            </div>
+          )}
         </div>
         <button
           type="submit"

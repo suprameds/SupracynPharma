@@ -1,17 +1,17 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { blogPosts } from "@/data/blog-posts";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
 import { Calendar, User } from "lucide-react";
 import Image from "next/image";
+import type { BlogPost } from "@/lib/supabase-blogs";
 
-export function InsightsList() {
+export function InsightsList({ posts }: { posts: BlogPost[] }) {
   const categories = useMemo(
-    () => ["All", ...Array.from(new Set(blogPosts.map((p) => p.category)))],
-    []
+    () => ["All", ...Array.from(new Set(posts.map((p) => p.category)))],
+    [posts]
   );
 
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
@@ -19,9 +19,9 @@ export function InsightsList() {
   const filteredPosts = useMemo(
     () =>
       selectedCategory === "All"
-        ? blogPosts
-        : blogPosts.filter((p) => p.category === selectedCategory),
-    [selectedCategory]
+        ? posts
+        : posts.filter((p) => p.category === selectedCategory),
+    [selectedCategory, posts]
   );
 
   return (
@@ -58,7 +58,7 @@ export function InsightsList() {
               <Card className="h-full hover:shadow-lg transition-shadow duration-300 border-slate-200 overflow-hidden bg-white group cursor-pointer flex flex-col">
                 <div className="aspect-[16/9] bg-slate-100 relative overflow-hidden">
                   <Image
-                    src={post.imageUrl}
+                    src={post.image_url}
                     alt={post.title}
                     fill
                     className="object-cover group-hover:scale-105 transition-transform duration-500"
@@ -82,7 +82,7 @@ export function InsightsList() {
                   <div className="flex items-center text-xs text-slate-400 font-medium space-x-4">
                     <span className="flex items-center gap-1">
                       <Calendar className="h-3.5 w-3.5" aria-hidden="true" />
-                      {new Date(post.date).toLocaleDateString("en-US", {
+                      {new Date(post.published_at ?? post.created_at).toLocaleDateString("en-US", {
                         month: "short",
                         day: "numeric",
                         year: "numeric",

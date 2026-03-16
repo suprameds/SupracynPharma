@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { footerNavigation } from "@/data/navigation";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Stethoscope, Mail } from "lucide-react";
+import { ArrowRight, Mail, Phone } from "lucide-react";
+import Image from "next/image";
 
 export function Footer() {
   return (
@@ -43,11 +44,19 @@ export function Footer() {
 
           {/* Brand column */}
           <div className="lg:col-span-2 space-y-5">
-            <Link href="/" className="flex items-center gap-2.5 group" aria-label="Supracyn Pharma home">
-              <div className="h-9 w-9 rounded-xl bg-primary flex items-center justify-center text-white shadow-sm group-hover:bg-primary/90 transition-colors">
-                <Stethoscope className="h-5 w-5" aria-hidden="true" />
-              </div>
-              <span className="font-bold text-lg tracking-tight text-white">Supracyn Pharma</span>
+            <Link href="/" className="flex items-center gap-2.5" aria-label="Supracyn Pharma home">
+              <img
+                src="/images/logo-icon.svg"
+                alt=""
+                width={32}
+                height={48}
+                className="h-11 w-auto flex-shrink-0 brightness-0 invert"
+                aria-hidden="true"
+              />
+              <span className="leading-tight flex flex-col">
+                <span className="font-extrabold text-lg tracking-widest uppercase text-white">Supracyn</span>
+                <span className="font-extrabold text-base tracking-widest uppercase" style={{ color: '#f77606' }}>Pharma</span>
+              </span>
             </Link>
             <p className="text-slate-400 text-sm leading-relaxed max-w-xs">
               Supracyn is a trusted pharmaceutical brand marketing quality, doctor-recommended medicines across India.
@@ -56,7 +65,11 @@ export function Footer() {
               <p className="font-medium text-slate-300">Corporate Office</p>
               <p>Sanath Nagar,</p>
               <p>Hyderabad, Telangana &mdash; 500018</p>
-              <a href="mailto:info@supracynpharma.com" className="block mt-2 text-primary hover:text-primary/80 transition-colors font-medium">
+              <a href="tel:+917032427651" className="flex items-center gap-1.5 mt-2 text-slate-300 hover:text-white transition-colors font-medium">
+                <Phone className="h-3.5 w-3.5 flex-shrink-0" aria-hidden="true" />
+                +91 70324 27651
+              </a>
+              <a href="mailto:info@supracynpharma.com" className="block mt-1 text-primary hover:text-primary/80 transition-colors font-medium">
                 info@supracynpharma.com
               </a>
             </div>
@@ -75,7 +88,7 @@ export function Footer() {
                 </svg>
               </a>
               <a
-                href="https://wa.me/911123456789"
+                href="https://wa.me/917032427651"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Contact Supracyn Pharma on WhatsApp"

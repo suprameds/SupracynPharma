@@ -42,12 +42,15 @@ const buttonVariants = cva(
   }
 )
 
+type ButtonSizeVariants = VariantProps<typeof buttonVariants>
+type BaseButtonProps = ButtonPrimitive.Props & ButtonSizeVariants
+
 function Button({
   className,
   variant = "default",
   size = "default",
   ...props
-}: ButtonPrimitive.Props & VariantProps<typeof buttonVariants>) {
+}: BaseButtonProps) {
   return (
     <ButtonPrimitive
       data-slot="button"

@@ -1,10 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { Header } from "@/components/layout/header";
-import { Footer } from "@/components/layout/footer";
-import { ScrollToTop } from "@/components/ui/scroll-to-top";
-import { WhatsAppButton } from "@/components/blocks/whatsapp-button";
 import { OrganizationJsonLd } from "@/components/seo/json-ld";
 import { GoogleAnalytics } from "@/components/seo/google-analytics";
 
@@ -96,12 +92,13 @@ export const metadata: Metadata = {
   },
 
   icons: {
-    icon: [
-      { url: "/favicon.svg", type: "image/svg+xml" },
-      { url: "/favicon.ico", sizes: "any" },
-    ],
-    apple: "/apple-touch-icon.png",
-    shortcut: "/favicon.ico",
+      icon: [
+            { url: "/favicon.png", type: "image/png", sizes: "512x512" },
+            { url: "/favicon.svg", type: "image/svg+xml" },
+            { url: "/favicon.ico", sizes: "any" },
+          ],
+          apple: "/favicon.png",
+          shortcut: "/favicon.png",
   },
 
   robots: {
@@ -137,11 +134,7 @@ export default function RootLayout({
       </head>
       <body className={`${inter.variable} font-sans antialiased flex min-h-screen flex-col`}>
         <GoogleAnalytics />
-        <Header />
-        <main className="flex-1">{children}</main>
-        <Footer />
-        <ScrollToTop />
-        <WhatsAppButton />
+        {children}
       </body>
     </html>
   );

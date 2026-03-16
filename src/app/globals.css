@@ -34,6 +34,8 @@
   --color-secondary: var(--secondary);
   --color-primary-foreground: var(--primary-foreground);
   --color-primary: var(--primary);
+  /* Brand accent cyan (#24a6e1 from logo) */
+  --color-brand-cyan: var(--brand-cyan);
   --color-popover-foreground: var(--popover-foreground);
   --color-popover: var(--popover);
   --color-card-foreground: var(--card-foreground);
@@ -55,13 +57,15 @@
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.2 0.05 250);
   
-  /* Primary: Deep Corporate Blue */
-  --primary: oklch(0.35 0.12 255);
+  /* Primary: UI blue for buttons, links, accents */
+  --primary: oklch(0.52 0.22 255);
   --primary-foreground: oklch(1 0 0);
+  /* Brand cyan */
+  --brand-cyan: #24a6e1;
   
   /* Secondary: Neutral Muted Blue */
-  --secondary: oklch(0.96 0.02 255);
-  --secondary-foreground: oklch(0.35 0.12 255);
+  --secondary: oklch(0.96 0.02 268);
+  --secondary-foreground: oklch(0.52 0.22 255);
   
   /* Muted: Light gray/blue */
   --muted: oklch(0.96 0.02 255);
@@ -76,7 +80,7 @@
   
   --border: oklch(0.92 0.01 255);
   --input: oklch(0.92 0.01 255);
-  --ring: oklch(0.35 0.12 255);
+  --ring: oklch(0.52 0.22 255);
   
   --radius: 0.5rem;
   
@@ -96,8 +100,9 @@
   --popover: oklch(0.2 0.05 250);
   --popover-foreground: oklch(0.98 0.01 255);
   
-  --primary: oklch(0.45 0.15 255);
+  --primary: oklch(0.62 0.22 255);
   --primary-foreground: oklch(1 0 0);
+  --brand-cyan: #4db8e8;
   
   --secondary: oklch(0.25 0.05 250);
   --secondary-foreground: oklch(0.98 0.01 255);

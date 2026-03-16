@@ -12,19 +12,29 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
-import { Menu, Stethoscope } from "lucide-react";
+import { Menu, Phone } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import Image from "next/image";
 
 export function Header() {
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container mx-auto flex h-16 items-center justify-between px-4 md:px-8">
+      <div className="container mx-auto flex h-18 items-center justify-between px-4 md:px-8">
         <div className="flex items-center gap-2">
-          <Link href="/" className="flex items-center space-x-2">
-            <div className="h-10 w-10 rounded-xl bg-primary flex items-center justify-center text-white shadow-sm">
-              <Stethoscope className="h-6 w-6" />
-            </div>
-            <span className="font-bold text-xl tracking-tight text-primary">Supracyn Pharma</span>
+          <Link href="/" className="flex items-center gap-2.5" aria-label="Supracyn Pharma home">
+            {/* SVG logo — inherently transparent, no bg removal needed */}
+            <img
+              src="/images/logo-icon.svg"
+              alt=""
+              width={40}
+              height={56}
+              className="h-14 w-auto flex-shrink-0"
+              aria-hidden="true"
+            />
+            <span className="leading-tight flex flex-col">
+              <span className="font-extrabold text-lg tracking-widest uppercase" style={{ color: '#1e1890' }}>Supracyn</span>
+              <span className="font-extrabold text-base tracking-widest uppercase" style={{ color: '#f77606' }}>Pharma</span>
+            </span>
           </Link>
         </div>
 
@@ -76,6 +86,13 @@ export function Header() {
 
         {/* Call to Action & Mobile Nav */}
         <div className="flex items-center gap-4">
+          <a
+            href="tel:+917032427651"
+            className="hidden lg:flex items-center gap-1.5 text-sm font-medium text-slate-600 hover:text-primary transition-colors"
+          >
+            <Phone className="h-4 w-4" />
+            +91 70324 27651
+          </a>
           <div className="hidden md:block">
             <Link href="/partnerships">
               <Button variant="default">Partner Inquiry</Button>

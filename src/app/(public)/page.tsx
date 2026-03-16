@@ -5,10 +5,10 @@ import { Hero } from "@/components/blocks/hero";
 import { TrustSignalsStrip } from "@/components/blocks/trust-signals";
 import { AnimatedStats } from "@/components/blocks/animated-stats";
 import { WhyUs } from "@/components/blocks/why-us";
-import { Testimonials } from "@/components/blocks/testimonials";
-import { getFeaturedProducts, CATEGORY_LABELS, CATEGORY_COLORS } from "@/lib/supabase-products";
+import { getFeaturedProducts, getTotalProductCount, getCategoryCounts, CATEGORY_LABELS, CATEGORY_COLORS } from "@/lib/supabase-products";
 import { therapyAreas } from "@/data/therapy-areas";
 import { Button } from "@/components/ui/button";
+import { BlogPreview } from "@/components/blocks/blog-preview";
 import Link from "next/link";
 import Image from "next/image";
 import {
@@ -127,7 +127,27 @@ const STATE_COLORS = [
 ];
 
 export default async function Home() {
-  const featuredProducts = await getFeaturedProducts(3);
+  const [featuredProducts, totalProducts, categoryCounts] = await Promise.all([
+    getFeaturedProducts(3),
+    getTotalProductCount(),
+    getCategoryCounts(),
+  ]);
+
+  const countByCategory: Record<string, number> = {};
+  for (const cc of categoryCounts) {
+    countByCategory[cc.category] = cc.count;
+  }
+
+  // Map therapy area IDs to product categories
+  const THERAPY_TO_CATEGORY: Record<string, string> = {
+    cardiology: "cardiology",
+    diabetology: "diabetology",
+    "anti-infectives": "anti-infectives",
+    gynaecology: "hormones",
+    "pain-management": "miscellaneous",
+    "vitamins-nutrition": "nutraceuticals",
+    gastroenterology: "gastroenterology",
+  };
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -138,7 +158,7 @@ export default async function Home() {
       />
 
       {/* 2. Animated Stats Bar */}
-      <AnimatedStats />
+      <AnimatedStats productCount={totalProducts} />
 
       {/* 3. Trust Signals */}
       <TrustSignalsStrip />
@@ -270,10 +290,19 @@ export default async function Home() {
                     </h3>
                     <p className="text-slate-500 text-sm line-clamp-2">{area.description}</p>
                   </div>
-                  <div
-                    className={`mt-auto inline-flex items-center text-xs font-semibold ${colors.text} gap-1`}
-                  >
-                    Explore Products <ArrowRight className="h-3 w-3" />
+                  <div className="mt-auto flex items-center justify-between">
+                    <div className={`inline-flex items-center text-xs font-semibold ${colors.text} gap-1`}>
+                      Explore Products <ArrowRight className="h-3 w-3" />
+                    </div>
+                    {(() => {
+                      const cat = THERAPY_TO_CATEGORY[area.id];
+                      const cnt = cat ? (countByCategory[cat] ?? 0) : 0;
+                      return cnt > 0 ? (
+                        <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${colors.bg} ${colors.text}`}>
+                          {cnt}
+                        </span>
+                      ) : null;
+                    })()}
                   </div>
                 </Link>
               );
@@ -288,7 +317,7 @@ export default async function Home() {
                 Full Portfolio
               </div>
               <div className="text-primary-foreground text-xl font-bold leading-snug mb-6">
-                See all 500+ formulations
+                {`See all ${totalProducts}+ formulations`}
               </div>
               <div className="inline-flex items-center text-primary-foreground text-sm font-semibold gap-1">
                 Browse Now <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
@@ -310,8 +339,7 @@ export default async function Home() {
                 Featured Formulations
               </h2>
               <p className="text-lg text-slate-600">
-                A selection of our high-demand Supracyn-branded products trusted by healthcare
-                professionals across India.
+                {`A selection from our ${totalProducts}+ Supracyn-branded products trusted by healthcare professionals across India.`}
               </p>
             </div>
             <Link href="/products">
@@ -325,20 +353,42 @@ export default async function Home() {
             {featuredProducts.map((product) => {
               const colors = CATEGORY_COLORS[product.category] ?? CATEGORY_COLORS.miscellaneous;
               return (
+                /* Stretched-link pattern: card is a relative container, the main
+                   Link is an absolute overlay, inner action links sit above it via z-10. */
                 <div
                   key={product.id}
-                  className={`bg-white rounded-2xl border ${colors.border} p-6 flex flex-col space-y-3 shadow-sm hover:shadow-md transition-shadow`}
+                  className={`relative bg-white rounded-2xl border ${colors.border} p-6 flex flex-col space-y-3 shadow-sm hover:shadow-md transition-shadow`}
                 >
+                  {/* Full-card invisible link — gives the whole card clickability */}
+                  <Link
+                    href={`/products/${product.id}`}
+                    className="absolute inset-0 rounded-2xl focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                    aria-label={`View ${product.name}`}
+                  />
+
                   <span className={`self-start text-[10px] font-bold px-2.5 py-1 rounded-full ${colors.badge}`}>
                     {CATEGORY_LABELS[product.category] ?? product.category}
                   </span>
                   <div className="font-bold text-slate-900 text-lg leading-snug">{product.name}</div>
                   <p className="text-slate-500 text-sm leading-relaxed flex-1">{product.composition}</p>
-                  <div className="pt-2 flex items-center justify-between border-t border-slate-100">
+
+                  {/* Action row sits above the overlay link */}
+                  <div className="relative z-10 pt-2 flex items-center justify-between border-t border-slate-100">
                     <span className="text-xs font-semibold text-slate-400">{product.form}</span>
-                    <Link href={`/products?category=${product.category}`} className={`text-xs font-bold ${colors.text} hover:underline`}>
-                      View Range →
-                    </Link>
+                    <div className="flex items-center gap-3">
+                      <Link
+                        href={`/products?category=${product.category}`}
+                        className={`text-xs font-semibold ${colors.text} hover:underline`}
+                      >
+                        Range →
+                      </Link>
+                      <Link
+                        href={`/contact?product=${encodeURIComponent(product.name)}`}
+                        className="text-xs font-semibold bg-slate-900 text-white px-2.5 py-1 rounded-md hover:bg-slate-700 transition-colors"
+                      >
+                        Enquire
+                      </Link>
+                    </div>
                   </div>
                 </div>
               );
@@ -347,10 +397,11 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* 9. Doctor Testimonials */}
-      <Testimonials />
 
-      {/* 10. Distribution Partnership */}
+      {/* 10. Blog Preview */}
+      <BlogPreview />
+
+      {/* 11. Distribution Partnership */}
       <section className="py-24 relative overflow-hidden bg-slate-900 text-white">
         <div className="absolute inset-0 bg-[url('/images/pattern.svg')] opacity-5" />
         <div className="container mx-auto px-4 md:px-8 relative z-10">
@@ -370,7 +421,7 @@ export default async function Home() {
 
               <div className="grid grid-cols-3 gap-4 pt-2">
                 {[
-                  { value: "500+", label: "Formulations" },
+                  { value: `${totalProducts}+`, label: "Formulations" },
                   { value: "7+", label: "Therapy Areas" },
                   { value: "4", label: "GMP Partners" },
                 ].map((s) => (
@@ -446,7 +497,7 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* 11. Product Catalogue CTA */}
+      {/* 12. Product Catalogue CTA */}
       <section className="py-14 bg-primary">
         <div className="container mx-auto px-4 md:px-8">
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
@@ -455,7 +506,7 @@ export default async function Home() {
                 Get Our Full Product Catalogue
               </h3>
               <p className="text-primary-foreground/80 text-base">
-                500+ Supracyn-branded formulations across 7 therapy areas — ready to distribute.
+                {`${totalProducts}+ Supracyn-branded formulations across 7 therapy areas — ready to distribute.`}
               </p>
             </div>
             <div className="flex flex-wrap gap-3 flex-shrink-0">
@@ -482,7 +533,7 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* 12. Suprameds Bridge */}
+      {/* 13. Suprameds Bridge */}
       <section className="py-20 bg-slate-50 border-b border-slate-200">
         <div className="container mx-auto px-4 md:px-8">
           <div className="max-w-4xl mx-auto text-center space-y-8 bg-white p-10 md:p-16 rounded-3xl border shadow-sm">
