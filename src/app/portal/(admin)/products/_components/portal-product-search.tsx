@@ -155,7 +155,6 @@ export function PortalProductSearch({
           autoComplete="off"
           aria-label="Search products"
           aria-autocomplete="list"
-          aria-expanded={showSuggestions && suggestions.length > 0}
           className="h-9 w-56 rounded-md border border-slate-300 bg-white px-3 text-sm"
         />
         {showSuggestions && (

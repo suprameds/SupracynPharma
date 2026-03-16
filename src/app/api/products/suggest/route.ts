@@ -10,12 +10,11 @@ const suggestSchema = z.object({
   q: z.string().min(2).max(100).transform((s) => s.trim()),
   category: z.string().max(50).optional(),
   form: z.string().max(30).optional(),
+  // Accept "true" / "false" as strings from the query param; default to "true"
   active_only: z
-    .string()
-    .transform((s) => s !== "false")
-    .pipe(z.boolean())
+    .union([z.literal("true"), z.literal("false")])
     .optional()
-    .default(true),
+    .default("true"),
 });
 
 // ---------------------------------------------------------------------------
@@ -37,11 +36,12 @@ export async function GET(request: NextRequest) {
   }
 
   const { q, category, form, active_only } = parsed.data;
+  const activeOnlyBool = active_only !== "false";
 
   let products: Array<{ id: number; name: string; composition: string; category: string; form: string }>;
   let total: number;
 
-  if (active_only) {
+  if (activeOnlyBool) {
     const result = await getProducts({
       search: q,
       category: category && category !== "all" ? category : undefined,

@@ -22,7 +22,6 @@ function useCountUp(target: number, duration: number, active: boolean): number {
 
   useEffect(() => {
     if (!active) return;
-    setCount(0);
     let startTime: number | null = null;
 
     function tick(timestamp: number) {

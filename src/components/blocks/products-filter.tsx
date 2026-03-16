@@ -8,7 +8,6 @@ import type { Product } from "@/lib/supabase-products";
 
 const SUGGEST_DEBOUNCE_MS = 300;
 const MIN_QUERY_LENGTH = 2;
-const MAX_SUGGESTIONS = 8;
 
 const FORM_OPTIONS = [
   { value: "all", label: "All Forms" },
@@ -201,7 +200,6 @@ export function ProductsFilter({
             aria-label="Search products by brand name or ingredient"
             aria-autocomplete="list"
             aria-controls="product-suggestions"
-            aria-expanded={showSuggestions && suggestions.length > 0}
             className="w-full pl-9 pr-4 py-2.5 text-sm border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary bg-white"
           />
           {showSuggestions && (
