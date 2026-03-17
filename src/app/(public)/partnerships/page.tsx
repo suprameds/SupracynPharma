@@ -44,6 +44,39 @@ export default function PartnershipsPage() {
                   ))}
                 </div>
               </div>
+
+              <div>
+                <h2 className="text-2xl font-bold text-slate-900 mb-4">
+                  Selected Hospital & Institutional Partners
+                </h2>
+                <p className="text-sm text-slate-600 mb-4">
+                  Supracyn-branded medicines are already trusted by leading hospitals and healthcare
+                  institutions across South India. A few of our key institutional partners include:
+                </p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  {[
+                    "Apollo Hospitals",
+                    "KEIMED Private Limited",
+                    "Prathima Institute of Medical Sciences",
+                    "CARE Hospitals",
+                    "KIMS Hospitals",
+                    "Lalitha Super Specialities Hospital",
+                    "Malla Reddy Institute of Medical Sciences",
+                    "Pranaam Hospitals",
+                    "Kamineni Hospitals",
+                    "KIMS KONSEEMA Hospital",
+                    "Vasu Group (Vasundhara Group of Hospitals)",
+                    "GSL Educational Society",
+                  ].map((name) => (
+                    <div
+                      key={name}
+                      className="rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm font-semibold text-slate-800"
+                    >
+                      {name}
+                    </div>
+                  ))}
+                </div>
+              </div>
               
               <div>
                 <h2 className="text-2xl font-bold text-slate-900 mb-6">How It Works</h2>

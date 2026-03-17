@@ -5,8 +5,10 @@ import { Hero } from "@/components/blocks/hero";
 import { TrustSignalsStrip } from "@/components/blocks/trust-signals";
 import { AnimatedStats } from "@/components/blocks/animated-stats";
 import { WhyUs } from "@/components/blocks/why-us";
+import { PartnerStrip } from "@/components/blocks/partner-strip";
 import { getFeaturedProducts, getTotalProductCount, getCategoryCounts, CATEGORY_LABELS, CATEGORY_COLORS } from "@/lib/supabase-products";
 import { therapyAreas } from "@/data/therapy-areas";
+import { HOSPITAL_PARTNERS } from "@/data/partners";
 import { Button } from "@/components/ui/button";
 import { BlogPreview } from "@/components/blocks/blog-preview";
 import Link from "next/link";
@@ -163,10 +165,13 @@ export default async function Home() {
       {/* 3. Trust Signals */}
       <TrustSignalsStrip />
 
-      {/* 4. Why Supracyn */}
+      {/* 4. Hospital & institutional partners */}
+      <PartnerStrip partners={HOSPITAL_PARTNERS} />
+
+      {/* 5. Why Supracyn */}
       <WhyUs />
 
-      {/* 5. Present Across India — Colourful state pills */}
+      {/* 6. Present Across India — Colourful state pills */}
       <section className="py-10 bg-white border-b border-slate-100">
         <div className="container mx-auto px-4 md:px-8">
           <p className="text-center text-xs font-bold uppercase tracking-widest text-slate-400 mb-6">
